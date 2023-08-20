@@ -1,0 +1,182 @@
+{
+	"name": "vscode-nginx-conf",
+	"displayName": "NGINX Configuration Language Support",
+	"description": "Nginx configuration helper for Visual Studio Code with many features including syntax highlight, auto-complete, in-editor documents, embedded Lua block, and more",
+	"version": "0.3.2",
+	"license": "GPL-3.0",
+	"icon": "images/icon.png",
+	"galleryBanner": {
+		"color": "#E5FFEC",
+		"theme": "light"
+	},
+	"categories": [
+		"Snippets",
+		"Formatters",
+		"Programming Languages"
+	],
+	"keywords": [
+		"Nginx",
+		"OpenResty",
+		"Configuration",
+		"Auto-completion"
+	],
+	"publisher": "ahmadalli",
+	"author": "ahmadalli",
+	"main": "./src/extension/main.desktop.js",
+	"browser": "./artifacts/web-ext/extension.js",
+	"scripts": {
+		"lint:eslint": "eslint --ext .js,.ts src test",
+		"build:desktop-ext": "tsc -p tsconfig.extension.json",
+		"dev:web-ext": "webpack",
+		"build:web-ext": "webpack --mode production --devtool hidden-source-map",
+		"build:utils": "tsc -p tsconfig.utils.json",
+		"build:syntax": "ts-node --project tsconfig.syntax.json ./src/syntax/generate-tmLanguage.ts",
+		"clean": "rimraf 'src/extension/**/*.js' 'src/utils/**/*.js'"
+	},
+	"extensionKind": [
+		"ui",
+		"workspace"
+	],
+	"extensionDependencies": [],
+	"dependencies": {},
+	"devDependencies": {
+		"@types/node": "^16.11.7",
+		"@types/vscode": "*",
+		"axios": "^0.24.0",
+		"chalk": "^3.0.0",
+		"cheerio": "1.0.0-rc.10",
+		"html-minifier": "^4.0.0",
+		"https-proxy-agent": "^5.0.0",
+		"process": "^0.11.10",
+		"rimraf": "^3.0.2",
+		"ts-loader": "^9.2.6",
+		"ts-node": "^10.4.0",
+		"turndown": "^7.1.1",
+		"typescript": "^4.4.4",
+		"webpack": "^5.64.1",
+		"webpack-cli": "^4.9.1"
+	},
+	"optionalDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.4.0",
+		"@typescript-eslint/parser": "^5.4.0",
+		"eslint": "^8.2.0"
+	},
+	"engines": {
+		"vscode": "^1.1.0"
+	},
+	"activationEvents": [
+		"onLanguage:nginx",
+		"onLanguage:lua"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "nginx",
+				"aliases": [
+					"NGINX Conf",
+					"NGINX",
+					"nginx"
+				],
+				"extensions": [
+					".conf",
+					".conf.default",
+					".conf.template",
+					"mime.types",
+					"fastcgi_params",
+					"scgi_params",
+					"uwsgi_params",
+					"nginx.conf",
+					".nginx"
+				],
+				"configuration": "./nginx.configuration.json"
+			}
+		],
+		"snippets": [
+			{
+				"language": "nginx",
+				"path": "./assets/snippets/nginx.json"
+			},
+			{
+				"language": "lua",
+				"path": "./assets/snippets/lua.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "nginx",
+				"scopeName": "source.nginx",
+				"path": "./src/syntax/nginx.tmLanguage",
+				"embeddedLanguages": {
+					"meta.embedded.block.lua": "lua"
+				}
+			}
+		],
+		"commands": [
+			{
+				"command": "nginx-conf-hint.showDocument",
+				"title": "%ext.command.goto-nginx-document%",
+				"shortTitle": "NginxDocs",
+				"category": "Nginx"
+			}
+		],
+		"configuration": [
+			{
+				"title": "%ext.config.title%",
+				"properties": {
+					"nginx-conf-hint.enableStrictCompletion": {
+						"title": "%ext.config.enable-strict-completion.title%",
+						"type": "boolean",
+						"default": true,
+						"description": "%ext.config.enable-strict-completion.description%"
+					},
+					"nginx-conf-hint.format.align": {
+						"title": "%ext.config.align.title%",
+						"type": "boolean",
+						"default": false,
+						"description": "%ext.config.align.description%"
+					},
+					"nginx-conf-hint.externalModules": {
+						"title": "%ext.config.extenal-modules.title%",
+						"type": "array",
+						"items": {
+							"enum": [
+								"lua",
+								"js"
+							]
+						},
+						"default": [],
+						"description": "%ext.config.extenal-modules.description%"
+					}
+				}
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "!inOutput && resourceLangId == 'nginx'",
+					"command": "nginx-conf-hint.showDocument",
+					"group": "navigation"
+				}
+			]
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ahmadalli/vscode-nginx-conf"
+	},
+	"bugs": {
+		"url": "https://github.com/ahmadalli/vscode-nginx-conf/issues"
+	},
+	"homepage": "https://github.com/ahmadalli/vscode-nginx-conf",
+	"__metadata": {
+		"id": "9a97436d-76aa-479c-8ae9-db2f400a7b04",
+		"publisherId": "601bc9fd-a61d-4bb5-b7e3-f73d4a861c7d",
+		"publisherDisplayName": "ahmadalli",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"updated": true,
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1692003543520,
+		"preRelease": false
+	}
+}

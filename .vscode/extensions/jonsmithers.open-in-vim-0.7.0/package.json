@@ -1,0 +1,113 @@
+{
+	"name": "open-in-vim",
+	"displayName": "Open in Vim",
+	"description": "Opens current file in vim",
+	"repository": "jonsmithers/vscode-open-in-vim",
+	"version": "0.7.0",
+	"publisher": "jonsmithers",
+	"license": "MIT",
+	"engines": {
+		"vscode": "^1.61.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"vim"
+	],
+	"activationEvents": [
+		"onCommand:open-in-vim.open"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "open-in-vim.open",
+				"title": "Open in Vim"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Open in Vim",
+			"properties": {
+				"open-in-vim.openMethod": {
+					"type": "string",
+					"enum": [
+						"gvim",
+						"integrated-terminal",
+						"kitty",
+						"linux.gnome-terminal",
+						"linux.tilix",
+						"macos.iterm",
+						"macos.macvim"
+					],
+					"scope": "resource",
+					"default": "integrated-terminal",
+					"description": "Determines how vim gets launched"
+				},
+				"open-in-vim.useNeovim": {
+					"type": "boolean",
+					"default": false,
+					"description": "Use Neovim instead of Vim (does not apply to gvim/macvim open method)"
+				},
+				"open-in-vim.restoreCursorAfterVim": {
+					"type": "boolean",
+					"default": false,
+					"description": "(EXPERIMENTAL) Sync cursor position to vscode when vim quits"
+				},
+				"open-in-vim.integrated-terminal.pathToShell": {
+					"type": "string",
+					"default": null,
+					"definition": "Path to unix shell which will host the vim process."
+				},
+				"open-in-vim.linux.gnome-terminal.args": {
+					"type": "string",
+					"scope": "resource",
+					"default": "--hide-menubar --full-screen",
+					"description": "Extra args to use with gnome-terminal"
+				},
+				"open-in-vim.linux.tilix.args": {
+					"type": "string",
+					"scope": "resource",
+					"default": "--full-screen",
+					"description": "Extra args to use with tilix"
+				},
+				"open-in-vim.macos.iterm.profile": {
+					"type": "string",
+					"scope": "resource",
+					"default": "default profile",
+					"description": "Profile to use for iterm window"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"icon": "images/icon.png",
+	"dependencies": {
+		"@types/tmp": "*",
+		"opn": "*",
+		"tmp": "*"
+	},
+	"devDependencies": {
+		"@types/mocha": "*",
+		"@types/node": "*",
+		"@types/vscode": "*",
+		"typescript": "*",
+		"vscode-test": "*"
+	},
+	"__metadata": {
+		"id": "710009d8-537a-4982-916d-07d9713bb996",
+		"publisherId": "b5c99333-e7e1-45e3-ae08-9160fa8a3c49",
+		"publisherDisplayName": "jonsmithers",
+		"targetPlatform": "undefined",
+		"updated": false,
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1692108687166,
+		"preRelease": false
+	}
+}

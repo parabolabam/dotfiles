@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/Users/parabolabam/.config/nvim/lua/user'
+let g:netrw_dirhist_3='/Users/parabolabam/gitlab/hccms/v2/ui/hccms-ui'
+let g:netrw_dirhist_2='/Users/parabolabam/azure/rcms-ui'
+let g:netrw_dirhist_1='/Users/parabolabam/.config/nvim'

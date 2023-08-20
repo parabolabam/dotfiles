@@ -1,0 +1,32 @@
+# vscode test web
+.vscode
+.vscode-test-web
+
+# github files
+.github
+
+# artifacts
+artifacts
+
+# macos files
+.DS_Store
+._*
+
+# ignore archive files
+*.tar
+*.tgz
+*.7z
+*.zip
+*.vsix
+*.log
+
+# ignore screenshots gif (big file)
+images/screenshots.gif
+
+# cache files
+cache
+cache-*
+
+# vscode typing files
+vscode.d.ts
+vscode.proposed.d.ts

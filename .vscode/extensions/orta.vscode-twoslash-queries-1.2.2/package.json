@@ -1,0 +1,83 @@
+{
+	"name": "vscode-twoslash-queries",
+	"displayName": "Twoslash Query Comments",
+	"description": "Adds support for twoslash query comments (// ^?) in TypeScript and JavaScript projects",
+	"publisher": "Orta",
+	"version": "1.2.2",
+	"engines": {
+		"vscode": "^1.67.0"
+	},
+	"icon": "icon.png",
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:typescript",
+		"onLanguage:typescriptreact",
+		"onLanguage:jsx-tags"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/orta/vscode-twoslash-queries"
+	},
+	"main": "./out/extension.js",
+	"browser": "./out/extension.js",
+	"scripts": {
+		"vscode:prepublish": "yarn run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "yarn run compile && yarn run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.67.0",
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.0",
+		"@types/node": "14.x",
+		"@typescript-eslint/eslint-plugin": "^5.49.0",
+		"@typescript-eslint/parser": "^5.49.0",
+		"eslint": "^8.9.0",
+		"glob": "^7.2.0",
+		"mocha": "^9.2.1",
+		"typescript": "^4.9.0",
+		"@vscode/test-electron": "^2.1.2"
+	},
+	"contributes": {
+		"commands": [
+			{
+				"command": "orta.vscode-twoslash-queries.insert-twoslash-query",
+				"title": "TwoSlash Query: Insert Below"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "orta.vscode-twoslash-queries.insert-twoslash-query",
+					"when": "editorLangId == typescript || editorLangId == typescriptreact || editorLangId == javascript || editorLangId == javascriptreact"
+				}
+			]
+		},
+		"keybindings": [
+			{
+				"command": "orta.vscode-twoslash-queries.insert-twoslash-query",
+				"when": "editorTextFocus",
+				"key": "ctrl+k 6",
+				"mac": "cmd+k 6"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "fd2c2092-c30c-4c43-b41f-b4dfbec3276f",
+		"publisherId": "c22b4001-1af3-48d1-87ed-490c6c3b747f",
+		"publisherDisplayName": "Orta",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"updated": true,
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1691573049358,
+		"preRelease": false
+	}
+}

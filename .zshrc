@@ -79,7 +79,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting dnf pass)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting dnf pass ripgrep starship thefuck z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -127,7 +127,8 @@ alias "git log"="git log --graph"
 alias ls="exa --icons -la"
 alias lzd='lazydocker'
 alias config='/usr/bin/git --git-dir=/Users/parabolabam/.cfg/ --work-tree=/Users/parabolabam'
-
+alias cat="bat"
+alias grep="rg"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export NVM_DIR="$HOME/.nvm"
@@ -141,4 +142,3 @@ export GITLAB_PRIVATE_TOKEN=Jb3rN4eWAQnMRrLG9jin
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 
-eval $(thefuck --alias)

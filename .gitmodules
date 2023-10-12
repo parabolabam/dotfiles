@@ -1,6 +1,6 @@
 [submodule ".config/nvim"]
 	path = .config/nvim
-	url = https://github.com/parabolabam/astronvim-parabolabam-config
+	url = https://github.com/AstroNvim/AstroNvim
 [submodule ".config/nvim/lua/user"]
 	path = .config/nvim/lua/user
 	url = https://github.com/parabolabam/astronvim-parabolabam-config

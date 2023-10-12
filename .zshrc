@@ -120,11 +120,14 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 
 #COMMANDS
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
 #ALIASES
-alias lss="ls -lha"
 alias v="nvim"
 alias "git log"="git log --graph"
-alias ls="exa --color-scale --icons --color=always -la"
+alias ls="exa --icons -la"
+alias lzd='lazydocker'
+alias config='/usr/bin/git --git-dir=/Users/parabolabam/.cfg/ --work-tree=/Users/parabolabam'
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export NVM_DIR="$HOME/.nvm"
@@ -137,6 +140,5 @@ export GITLAB_PRIVATE_TOKEN=Jb3rN4eWAQnMRrLG9jin
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-alias config='/usr/bin/git --git-dir=/Users/parabolabam/.cfg/ --work-tree=/Users/parabolabam'
 
 eval $(thefuck --alias)

@@ -120,10 +120,21 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 
 #COMMANDS
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+#FUNCTIONS
+
+fcd() {
+  local dir
+  dir=$(find ${1:-.} -type d -not -path '*/\.*' 2> /dev/null | fzf +m) && cd "$dir"
+}
+
 #ALIASES
-alias lss="ls -lha"
+alias ls="exa -lha"
 alias v="nvim"
+alias cat="bat"
 alias "git log"="git log --graph"
+alias lzd='lazydocker'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export NVM_DIR="$HOME/.nvm"
@@ -133,7 +144,17 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/.local/bin":$PATH
 
 export GITLAB_PRIVATE_TOKEN=Jb3rN4eWAQnMRrLG9jin
+export LOCAL_ADDRESS=http://$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n 1)
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 alias config='/usr/bin/git --git-dir=/Users/parabolabam/.cfg/ --work-tree=/Users/parabolabam'
+
+# bun completions
+[ -s "/Users/parabolabam/.bun/_bun" ] && source "/Users/parabolabam/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+eval $(thefuck --alias)

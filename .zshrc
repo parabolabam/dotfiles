@@ -119,10 +119,11 @@ eval "$(starship init zsh)"
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 #COMMANDS
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$($(where brew) shellenv)"
 
 #ALIASES
 alias v="nvim"
+alias cl="clear"
 alias ls="exa --icons -la"
 alias lzd='lazydocker'
 alias config='/usr/bin/git --git-dir=/Users/parabolabam/.cfg/ --work-tree=/Users/parabolabam'

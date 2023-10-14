@@ -17,13 +17,13 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
+# ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="random"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -35,7 +35,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
 # zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
 # zstyle ':omz:update' frequency 13
@@ -79,7 +79,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting dnf pass ripgrep starship thefuck z)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting dnf pass ripgrep starship z thefuck lighthouse) 
 
 source $ZSH/oh-my-zsh.sh
 
@@ -123,7 +123,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 #ALIASES
 alias v="nvim"
-alias "git log"="git log --graph"
 alias ls="exa --icons -la"
 alias lzd='lazydocker'
 alias config='/usr/bin/git --git-dir=/Users/parabolabam/.cfg/ --work-tree=/Users/parabolabam'
@@ -139,6 +138,4 @@ export PATH="$HOME/.local/bin":$PATH
 
 export GITLAB_PRIVATE_TOKEN=Jb3rN4eWAQnMRrLG9jin
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-
+eval $(thefuck --alias)

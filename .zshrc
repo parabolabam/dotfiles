@@ -129,6 +129,7 @@ alias lzd='lazydocker'
 alias config='/usr/bin/git --git-dir=/Users/parabolabam/.cfg/ --work-tree=/Users/parabolabam'
 alias cat="bat"
 alias grep="rg"
+alias man="tldr"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export NVM_DIR="$HOME/.nvm"

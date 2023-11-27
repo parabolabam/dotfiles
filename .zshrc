@@ -141,3 +141,6 @@ export PATH="$HOME/.local/bin":$PATH
 export GITLAB_PRIVATE_TOKEN=Jb3rN4eWAQnMRrLG9jin
 
 eval $(thefuck --alias)
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi

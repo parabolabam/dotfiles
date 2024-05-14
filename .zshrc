@@ -130,6 +130,7 @@ alias config='/usr/bin/git --git-dir=/Users/parabolabam/.cfg/ --work-tree=/Users
 alias cat="bat"
 alias grep="rg"
 alias man="tldr"
+alias cd="z"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export NVM_DIR="$HOME/.nvm"

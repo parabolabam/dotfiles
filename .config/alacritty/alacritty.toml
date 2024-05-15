@@ -13,7 +13,7 @@ opacity = 0.5
 blur = true
 option_as_alt = "Both"
 
-startup_mode = "SimpleFullscreen"
+startup_mode = "Fullscreen"
 
 [font]
 normal.family = "MesloLGS Nerd Font Mono"

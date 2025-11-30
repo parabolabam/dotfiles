@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Compiled
+*.zwc
+*.pyc
+__pycache__/
+
+# Caches
+.zcompdump*
+.zsh_history
+cache/
+
+# Local overrides
+*.local
+.env
+
+# Backup files
+*.backup.*
+

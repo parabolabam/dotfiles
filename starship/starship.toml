@@ -1,0 +1,112 @@
+# ============================================================================
+#  Starship Prompt Configuration
+#  https://starship.rs/config/
+# ============================================================================
+
+# Timeout for commands (ms)
+command_timeout = 1000
+
+# Format
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$rust\
+$golang\
+$kubernetes\
+$docker_context\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Right prompt
+right_format = """$time"""
+
+# Prompt character
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
+# Directory
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold cyan"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+# Git branch
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
+# Git status
+[git_status]
+style = "bold yellow"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+conflicted = "="
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?"
+stashed = "$"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+
+# Command duration
+[cmd_duration]
+min_time = 2000
+format = "took [$duration](bold yellow) "
+
+# Node.js
+[nodejs]
+symbol = " "
+style = "bold green"
+format = "[$symbol($version )]($style)"
+
+# Python
+[python]
+symbol = " "
+style = "bold yellow"
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+# Kubernetes
+[kubernetes]
+disabled = false
+symbol = "☸ "
+style = "bold blue"
+format = '[$symbol$context( \($namespace\))]($style) '
+
+# Docker
+[docker_context]
+symbol = " "
+style = "bold blue"
+format = "[$symbol$context]($style) "
+only_with_files = true
+
+# Time
+[time]
+disabled = false
+format = '[$time]($style) '
+style = "dimmed white"
+time_format = "%H:%M"
+
+# Username (only show in SSH)
+[username]
+show_always = false
+style_user = "bold blue"
+format = "[$user]($style)@"
+
+# Hostname (only show in SSH)
+[hostname]
+ssh_only = true
+style = "bold green"
+format = "[$hostname]($style) "
+

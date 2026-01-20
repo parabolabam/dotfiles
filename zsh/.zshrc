@@ -190,4 +190,4 @@ export PATH="$HOME/.local/bin:$PATH"
 # Add to ~/.zshrc or ~/.bashrc
 
 # Added by Antigravity
-export PATH="/Users/parabolabam/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"

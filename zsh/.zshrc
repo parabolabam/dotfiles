@@ -139,6 +139,8 @@ alias fzf="fzf --preview 'bat --color=always {} 2>/dev/null || cat {}'"
 
 # Kubernetes
 alias k="kubectl"
+alias k9s-prod='KUBECONFIG="$HOME/.kube/config.prod" k9s --context dt-prod-usw2'
+alias k9s-dev='KUBECONFIG="$HOME/.kube/config" k9s --context dt-dev-euc1'
 
 # ============================================================================
 #  Functions
@@ -184,3 +186,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # ============================================================================
 [[ -o interactive && -z "$TMUX" && "${AUTO_TMUX:-0}" = "1" ]] && mux
 
+export PATH="$HOME/.local/bin:$PATH"
+# Add to ~/.zshrc or ~/.bashrc
+
+# Added by Antigravity
+export PATH="/Users/parabolabam/.antigravity/antigravity/bin:$PATH"

@@ -27,3 +27,10 @@ cache/
 # Backup files
 *.backup.*
 
+
+# Tmux plugins (managed by TPM)
+tmux/.config/tmux/plugins/
+tmux/plugins/
+
+# Machine-specific data (not portable)
+.local/share/tmux/resurrect/

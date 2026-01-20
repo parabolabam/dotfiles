@@ -8,7 +8,7 @@
 set -e
 
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
-REPO_URL="${REPO_URL:-https://github.com/YOUR_USER/dotfiles.git}"
+REPO_URL="${REPO_URL:-https://github.com/parabolabam/dotfiles.git}"
 
 # Colors
 RED='\033[0;31m'
@@ -67,7 +67,7 @@ log_header "📦 Installing Packages"
 
 if [[ -f "$DOTFILES_DIR/Brewfile" ]]; then
     log_step "Installing from Brewfile..."
-    brew bundle --file="$DOTFILES_DIR/Brewfile" --no-lock
+    brew bundle --file="$DOTFILES_DIR/Brewfile" || true
     log_success "Packages installed"
 else
     log_warning "No Brewfile found, installing essential packages..."
@@ -149,43 +149,37 @@ mkdir -p "$HOME/.config/zsh"
 log_success "Directories created"
 
 # ============================================================================
-#  Symlink dotfiles
+#  Symlink dotfiles with Stow
 # ============================================================================
-log_header "🔗 Symlinking Dotfiles"
+log_header "🔗 Symlinking Dotfiles with Stow"
 
-# Function to safely symlink
-symlink() {
-    local src="$1"
-    local dest="$2"
-    
-    if [[ -e "$dest" ]] && [[ ! -L "$dest" ]]; then
-        log_warning "Backing up existing $dest"
-        mv "$dest" "$dest.backup.$(date +%s)"
-    fi
-    
-    if [[ -L "$dest" ]]; then
-        rm "$dest"
-    fi
-    
-    ln -sf "$src" "$dest"
-    log_success "Linked $(basename $dest)"
-}
+cd "$DOTFILES_DIR"
 
-# Main config links
-symlink "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
-symlink "$DOTFILES_DIR/tmux" "$HOME/.config/tmux"
-symlink "$DOTFILES_DIR/kitty" "$HOME/.config/kitty"
-symlink "$DOTFILES_DIR/alacritty" "$HOME/.config/alacritty"
-symlink "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
-symlink "$DOTFILES_DIR/lazygit" "$HOME/.config/lazygit"
-symlink "$DOTFILES_DIR/yazi" "$HOME/.config/yazi"
-symlink "$DOTFILES_DIR/btop" "$HOME/.config/btop"
-symlink "$DOTFILES_DIR/k9s" "$HOME/.config/k9s"
-symlink "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
+# Create required directories first
+mkdir -p "$HOME/.ssh"
+chmod 700 "$HOME/.ssh"
+mkdir -p "$HOME/.config"
+
+# Stow all packages (each subdirectory is a "package")
+PACKAGES=(zsh git ssh tmux kitty alacritty starship lazygit yazi btop k9s)
+for pkg in "${PACKAGES[@]}"; do
+    if [[ -d "$DOTFILES_DIR/$pkg" ]]; then
+        log_step "Stowing $pkg..."
+        # Remove existing symlinks/files that might conflict
+        stow -D "$pkg" -t "$HOME" 2>/dev/null || true
+        # Stow the package
+        if stow -R "$pkg" -t "$HOME" 2>/dev/null; then
+            log_success "Stowed $pkg"
+        else
+            log_warning "Failed to stow $pkg (may have conflicts)"
+        fi
+    fi
+done
 
 # Neovim (if you want to manage it here)
 if [[ -d "$DOTFILES_DIR/nvim" ]] && [[ -n "$(ls -A $DOTFILES_DIR/nvim 2>/dev/null)" ]]; then
-    symlink "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
+    log_step "Stowing nvim..."
+    stow -R "nvim" -t "$HOME" 2>/dev/null && log_success "Stowed nvim" || log_warning "Failed to stow nvim"
 fi
 
 # ============================================================================

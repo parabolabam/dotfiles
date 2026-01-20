@@ -57,3 +57,12 @@
     # Delete merged branches
     cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -d"
 
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[lfs]
+	activitytimeout = 300
+	dialtimeout = 300
+	concurrenttransfers = 1

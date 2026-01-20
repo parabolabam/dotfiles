@@ -2,7 +2,7 @@
 #  Yazi Configuration
 # ============================================================================
 
-[manager]
+[mgr]
 show_hidden = true
 sort_by = "natural"
 sort_sensitive = false

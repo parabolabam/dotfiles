@@ -1,85 +1,99 @@
-# ============================================================================
-#  Brewfile - Homebrew Bundle
-#  Install: brew bundle --file=Brewfile
-# ============================================================================
-
-# Taps
-tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
-
-# ============================================================================
-#  Shell & Prompt
-# ============================================================================
-brew "zsh"
-brew "starship"
-
-# ============================================================================
-#  Modern CLI Replacements
-# ============================================================================
-brew "eza"          # Better ls
-brew "bat"          # Better cat
-brew "fd"           # Better find
-brew "ripgrep"      # Better grep
-brew "fzf"          # Fuzzy finder
-brew "zoxide"       # Smart cd
-brew "tree"         # Directory tree
-brew "jq"           # JSON processor
-
-# ============================================================================
-#  Editor & Terminal Multiplexer
-# ============================================================================
-brew "neovim"
-brew "tmux"
-
-# ============================================================================
-#  Git & Version Control
-# ============================================================================
-brew "git"
-brew "lazygit"
-brew "gh"           # GitHub CLI
-
-# ============================================================================
-#  Container & Kubernetes
-# ============================================================================
-brew "lazydocker"
-brew "kubernetes-cli"
-brew "k9s"
-brew "helm"
-brew "kubectx"
-
-# ============================================================================
-#  Node.js & JavaScript
-# ============================================================================
-brew "nvm"
-brew "bun"
-
-# ============================================================================
-#  File Management
-# ============================================================================
-brew "yazi"         # Terminal file manager
-brew "stow"         # Symlink manager
-
-# ============================================================================
-#  System & Utilities
-# ============================================================================
-brew "neofetch"
+tap "d99kris/nchat"
+tap "go-task/tap"
+tap "hashicorp/tap"
+tap "homebrew/command-not-found"
+tap "int128/kubelogin"
+tap "oven-sh/bun"
+brew "python@3.13"
+brew "awscli"
+brew "bat"
 brew "btop"
-brew "thefuck"
-brew "sesh"         # Tmux session manager
-brew "pass"         # Password manager
-
-# ============================================================================
-#  Media & Misc
-# ============================================================================
-brew "imagemagick"
+brew "colima", restart_service: :changed
+brew "docker"
+brew "docker-compose"
+brew "doctl"
+brew "eza"
+brew "fd"
 brew "ffmpeg"
-
-# ============================================================================
-#  Cask Applications
-# ============================================================================
-cask "kitty"
+brew "fzf"
+brew "gh"
+brew "git"
+brew "git-lfs"
+brew "helm"
+brew "imagemagick"
+brew "jq"
+brew "k9s"
+brew "kubernetes-cli"
+brew "kubectx"
+brew "lazydocker"
+brew "lazygit"
+brew "lighthouse"
+brew "neofetch"
+brew "neovim"
+brew "nvm"
+brew "pass"
+brew "pnpm"
+brew "poppler"
+brew "resvg"
+brew "ripgrep"
+brew "ruby"
+brew "sesh"
+brew "sevenzip"
+brew "starship"
+brew "stow"
+brew "thefuck"
+brew "tmux"
+brew "yazi"
+brew "z"
+brew "zoxide"
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-completions"
+brew "zsh-syntax-highlighting"
+brew "go-task/tap/go-task"
+brew "hashicorp/tap/vault"
+brew "int128/kubelogin/kubelogin"
+brew "oven-sh/bun/bun"
+cask "1password-cli"
+cask "caffeine"
+cask "gcloud-cli"
 cask "ghostty"
-cask "font-meslo-lg-nerd-font"
-cask "font-jetbrains-mono-nerd-font"
-cask "font-fira-code-nerd-font"
-
+cask "kitty"
+cask "ngrok"
+cask "textmate"
+cask "visual-studio-code@insiders"
+cask "yed"
+vscode "dbaeumer.vscode-eslint"
+vscode "eamodio.gitlens"
+vscode "editorconfig.editorconfig"
+vscode "enkia.tokyo-night"
+vscode "esbenp.prettier-vscode"
+vscode "github.copilot"
+vscode "github.copilot-chat"
+vscode "golang.go"
+vscode "jebbs.plantuml"
+vscode "jonsmithers.open-in-vim"
+vscode "meerkatio.meerkatio"
+vscode "meezilla.json"
+vscode "mhutchie.git-graph"
+vscode "ms-python.black-formatter"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-toolsai.datawrangler"
+vscode "ms-toolsai.jupyter"
+vscode "ms-toolsai.jupyter-keymap"
+vscode "ms-toolsai.jupyter-renderers"
+vscode "ms-toolsai.vscode-jupyter-cell-tags"
+vscode "ms-toolsai.vscode-jupyter-slideshow"
+vscode "ms-vscode.vscode-commander"
+vscode "ms-vscode.vscode-websearchforcopilot"
+vscode "mvllow.rose-pine"
+vscode "openai.chatgpt"
+vscode "qufiwefefwoyn.kanagawa"
+vscode "redhat.vscode-yaml"
+vscode "repreng.csv"
+vscode "rvest.vs-code-prettier-eslint"
+vscode "vscodevim.vim"
+vscode "zainchen.json"

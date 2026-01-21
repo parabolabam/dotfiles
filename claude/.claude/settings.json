@@ -1,0 +1,44 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/notify-on-stop.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true,
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(echo echo '--- Searching for freezing/defrosting ---' curl -s http://localhost:9200/articles_vectors/_search?pretty -H 'Content-Type: application/json' -d '{\n  \"\"\"\"_source\"\"\"\": [\"\"\"\"payload.ID\"\"\"\", \"\"\"\"payload.title\"\"\"\"],\n  \"\"\"\"size\"\"\"\": 10,\n  \"\"\"\"query\"\"\"\": {\n    \"\"\"\"match\"\"\"\": {\"\"\"\"payload.title\"\"\"\": \"\"\"\"congelar\"\"\"\"}\n  }\n}')",
+      "Bash(echo echo '--- Searching for account cancellation status ---' curl -s http://localhost:9200/articles_vectors/_search?pretty -H 'Content-Type: application/json' -d '{\n  \"\"\"\"_source\"\"\"\": [\"\"\"\"payload.ID\"\"\"\", \"\"\"\"payload.title\"\"\"\"],\n  \"\"\"\"size\"\"\"\": 10,\n  \"\"\"\"query\"\"\"\": {\n    \"\"\"\"bool\"\"\"\": {\n      \"\"\"\"must\"\"\"\": [\n        {\"\"\"\"match\"\"\"\": {\"\"\"\"payload.title\"\"\"\": \"\"\"\"cancelación cuenta\"\"\"\"}},\n        {\"\"\"\"match\"\"\"\": {\"\"\"\"payload.title\"\"\"\": \"\"\"\"estado\"\"\"\"}}\n      ]\n    }\n  }\n}')",
+      "mcp__atlassian__getConfluenceSpaces",
+      "mcp__atlassian__getPagesInConfluenceSpace",
+      "mcp__atlassian__searchConfluenceUsingCql",
+      "mcp__atlassian__getConfluencePage",
+      "mcp__atlassian__getConfluencePageDescendants",
+      "mcp__atlassian__getAccessibleAtlassianResources",
+      "Bash(python3:*)",
+      "Bash(git worktree:*)",
+      "Bash(git add:*)",
+      "Bash(git stash:*)",
+      "Bash(uv run python:*)",
+      "mcp__atlassian__getJiraIssue",
+      "Bash(jq:*)",
+      "Bash(cat:*)",
+      "Bash(wc:*)",
+      "Bash(ls:*)",
+      "mcp__gitlab__get_file_contents"
+    ],
+    "defaultMode": "plan"
+  }
+}

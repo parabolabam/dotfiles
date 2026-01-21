@@ -34,3 +34,18 @@ tmux/plugins/
 
 # Machine-specific data (not portable)
 .local/share/tmux/resurrect/
+
+# Claude Code (sensitive/machine-specific)
+claude/.claude/settings.local.json
+claude/.claude/history.jsonl
+claude/.claude/stats-cache.json
+claude/.claude/file-history/
+claude/.claude/plans/
+claude/.claude/debug/
+
+# Gemini CLI (sensitive/machine-specific)
+gemini/.gemini/oauth_creds.json
+gemini/.gemini/google_accounts.json
+gemini/.gemini/installation_id
+gemini/.gemini/state.json
+gemini/.gemini/tmp/

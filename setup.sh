@@ -161,7 +161,7 @@ chmod 700 "$HOME/.ssh"
 mkdir -p "$HOME/.config"
 
 # Stow all packages (each subdirectory is a "package")
-PACKAGES=(zsh git ssh tmux kitty alacritty starship lazygit yazi btop k9s)
+PACKAGES=(zsh git ssh tmux kitty alacritty starship lazygit yazi btop k9s claude gemini)
 for pkg in "${PACKAGES[@]}"; do
     if [[ -d "$DOTFILES_DIR/$pkg" ]]; then
         log_step "Stowing $pkg..."

@@ -153,6 +153,19 @@ mkdir -p "$HOME/.config/zsh"
 log_success "Directories created"
 
 # ============================================================================
+#  Install global dotfiles CLI
+# ============================================================================
+log_header "🧰 Dotfiles CLI"
+
+if [[ -x "$DOTFILES_DIR/scripts/install-cli.sh" ]]; then
+    log_step "Installing global dotfiles command..."
+    "$DOTFILES_DIR/scripts/install-cli.sh" --repo-dir "$DOTFILES_DIR" --bin-dir "$HOME/.local/bin"
+    log_success "dotfiles command installed"
+else
+    log_warning "scripts/install-cli.sh is missing or not executable"
+fi
+
+# ============================================================================
 #  Symlink dotfiles with Stow
 # ============================================================================
 log_header "🔗 Symlinking Dotfiles with Stow"

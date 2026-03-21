@@ -4,26 +4,25 @@ This repo is the portable source of truth for my shell and terminal config. It i
 
 ## Primary Workflow
 
-1. Clone the repo.
-2. Install packages from the Brewfile if needed.
-3. Stow the packages into `$HOME`.
+1. Install the global CLI once.
+2. Run `dotfiles` commands from anywhere.
+3. Let the repo stay in `~/dotfiles` as the source of truth.
 
 Quick start:
 
 ```bash
-git clone --recurse-submodules https://github.com/parabolabam/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-brew bundle --file Brewfile
-./scripts/stow-packages.sh
+curl -fsSL https://raw.githubusercontent.com/parabolabam/dotfiles/main/scripts/install-cli.sh | bash
+dotfiles doctor
+dotfiles rebuild
 ```
 
-If you already cloned the repo without submodules, run this once before stowing:
+If you already cloned the repo and just want the command:
 
 ```bash
-git submodule update --init --recursive
+~/dotfiles/scripts/install-cli.sh
 ```
 
-If you want the full bootstrap path, `./setup.sh` still exists and now delegates the symlink step to `./scripts/stow-packages.sh`.
+If you want the full bootstrap path, `./setup.sh` still exists and now installs the CLI before applying packages.
 
 ## Repo Layout
 
@@ -32,6 +31,9 @@ Each top-level directory is a Stow package. Files underneath mirror their destin
 ```text
 dotfiles/
 ├── stow-packages.txt
+├── bin/dotfiles
+├── scripts/add-package.sh
+├── scripts/install-cli.sh
 ├── scripts/stow-packages.sh
 ├── Brewfile
 ├── setup.sh
@@ -58,25 +60,37 @@ The `nvim/.config/nvim` directory is a Git submodule that points at `https://git
 List all configured packages:
 
 ```bash
-./scripts/stow-packages.sh --list
+dotfiles list
 ```
 
 Restow everything:
 
 ```bash
-./scripts/stow-packages.sh
+dotfiles stow
 ```
 
-Adopt existing files into a package before restowing:
+Restow just a few packages:
 
 ```bash
-./scripts/stow-packages.sh --adopt zsh tmux
+dotfiles stow zsh tmux
 ```
 
 Unstow one package:
 
 ```bash
-./scripts/stow-packages.sh --delete nvim
+dotfiles unstow nvim
+```
+
+Add a new package and scaffold it in the repo:
+
+```bash
+dotfiles add atuin --brew
+```
+
+Adopt an existing local config directory into the repo and link it:
+
+```bash
+dotfiles add zed --cask --install
 ```
 
 ## Brew Usage
@@ -84,31 +98,31 @@ Unstow one package:
 Audit package drift against the Brewfile:
 
 ```bash
-./scripts/brew-sync.sh audit
+dotfiles brew audit
 ```
 
 Install or restore everything declared in the Brewfile:
 
 ```bash
-./scripts/brew-sync.sh install
+dotfiles brew install
 ```
 
 Preview packages that are installed locally but not declared in the Brewfile:
 
 ```bash
-./scripts/brew-sync.sh cleanup-preview
+dotfiles brew cleanup-preview
 ```
 
 Actually remove packages not declared in the Brewfile:
 
 ```bash
-./scripts/brew-sync.sh cleanup-force
+dotfiles brew cleanup-force
 ```
 
 Rebuild a machine from the repo package set and restow configs:
 
 ```bash
-./scripts/rebuild-machine.sh
+dotfiles rebuild
 ```
 
 ## Portability Rules
@@ -125,5 +139,6 @@ Keep out of this repo:
 ## Notes
 
 - `~/dotfiles` is the source of truth.
+- `dotfiles` is the global command entrypoint.
 - `~/.config` is the live target directory after symlinks are applied.
 - The supported path for now is Homebrew + Stow.

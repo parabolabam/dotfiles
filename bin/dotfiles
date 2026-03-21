@@ -1,0 +1,176 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+RED=$'\033[0;31m'
+GREEN=$'\033[0;32m'
+YELLOW=$'\033[1;33m'
+BLUE=$'\033[0;34m'
+CYAN=$'\033[0;36m'
+BOLD=$'\033[1m'
+DIM=$'\033[2m'
+NC=$'\033[0m'
+
+resolve_script_dir() {
+  local source="${BASH_SOURCE[0]}"
+  local dir=""
+
+  while [[ -L "$source" ]]; do
+    dir="$(cd -P "$(dirname "$source")" && pwd)"
+    source="$(readlink "$source")"
+    [[ "$source" != /* ]] && source="$dir/$source"
+  done
+
+  cd -P "$(dirname "$source")" && pwd
+}
+
+usage() {
+  cat <<EOF
+${BOLD}dotfiles${NC} ${DIM}Global CLI for your dotfiles repo${NC}
+
+${BOLD}Usage${NC}
+  dotfiles [--repo PATH] <command> [args...]
+
+${BOLD}Commands${NC}
+  add         Create or adopt a Stow package and optionally register Brew entries
+  stow        Restow one or more packages
+  unstow      Remove one or more package links
+  list        Print configured Stow packages
+  brew        Run Brewfile workflows: audit, install, cleanup-preview, cleanup-force
+  rebuild     Sync submodules, install Brewfile packages, then stow configs
+  sync        Update git submodules in the dotfiles repo
+  repo        Print the resolved dotfiles repo path
+  doctor      Show repo and tool status
+  install-cli Install or refresh this command in ~/.local/bin
+  help        Show this help
+
+${BOLD}Examples${NC}
+  dotfiles add atuin --brew
+  dotfiles add zed --cask --install
+  dotfiles stow nvim tmux
+  dotfiles unstow kitty
+  dotfiles brew audit
+  dotfiles rebuild --adopt
+EOF
+}
+
+info() {
+  printf '%b\n' "${CYAN}$*${NC}"
+}
+
+success() {
+  printf '%b\n' "${GREEN}$*${NC}"
+}
+
+warn() {
+  printf '%b\n' "${YELLOW}$*${NC}" >&2
+}
+
+die() {
+  printf '%b\n' "${RED}$*${NC}" >&2
+  exit 1
+}
+
+require_repo() {
+  [[ -d "$DOTFILES_DIR" ]] || die "Dotfiles repo not found at $DOTFILES_DIR. Run: curl -fsSL https://raw.githubusercontent.com/parabolabam/dotfiles/main/scripts/install-cli.sh | bash"
+  [[ -f "$DOTFILES_DIR/Brewfile" ]] || die "Brewfile missing in $DOTFILES_DIR"
+  [[ -x "$DOTFILES_DIR/scripts/stow-packages.sh" ]] || die "scripts/stow-packages.sh is missing or not executable in $DOTFILES_DIR"
+}
+
+run_in_repo() {
+  (cd "$DOTFILES_DIR" && "$@")
+}
+
+SCRIPT_DIR="$(resolve_script_dir)"
+REPO_FROM_SCRIPT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+if [[ -n "${DOTFILES_DIR:-}" ]]; then
+  DOTFILES_DIR="$DOTFILES_DIR"
+elif [[ -f "$REPO_FROM_SCRIPT/Brewfile" ]]; then
+  DOTFILES_DIR="$REPO_FROM_SCRIPT"
+else
+  DOTFILES_DIR="$HOME/dotfiles"
+fi
+
+if [[ "${1:-}" == "--repo" ]]; then
+  [[ $# -ge 2 ]] || die "--repo requires a path"
+  DOTFILES_DIR="$2"
+  shift 2
+fi
+
+COMMAND="${1:-help}"
+if [[ $# -gt 0 ]]; then
+  shift
+fi
+
+case "$COMMAND" in
+  help|-h|--help)
+    usage
+    ;;
+  repo)
+    printf '%s\n' "$DOTFILES_DIR"
+    ;;
+  list)
+    require_repo
+    exec "$DOTFILES_DIR/scripts/stow-packages.sh" --list "$@"
+    ;;
+  stow)
+    require_repo
+    exec "$DOTFILES_DIR/scripts/stow-packages.sh" "$@"
+    ;;
+  unstow)
+    require_repo
+    exec "$DOTFILES_DIR/scripts/stow-packages.sh" --delete "$@"
+    ;;
+  add)
+    require_repo
+    exec "$DOTFILES_DIR/scripts/add-package.sh" "$@"
+    ;;
+  brew)
+    require_repo
+    MODE="${1:-audit}"
+    shift || true
+    exec "$DOTFILES_DIR/scripts/brew-sync.sh" "$MODE" "$@"
+    ;;
+  rebuild)
+    require_repo
+    exec "$DOTFILES_DIR/scripts/rebuild-machine.sh" "$@"
+    ;;
+  sync)
+    require_repo
+    info "Syncing git submodules in $DOTFILES_DIR"
+    run_in_repo git submodule update --init --recursive
+    success "Submodules are up to date."
+    ;;
+  doctor)
+    require_repo
+    printf '%b\n' "${BOLD}Dotfiles Doctor${NC}"
+    printf 'repo: %s\n' "$DOTFILES_DIR"
+    printf 'brewfile: %s\n' "$DOTFILES_DIR/Brewfile"
+    printf 'stow-packages: %s\n' "$DOTFILES_DIR/stow-packages.txt"
+    printf '\n'
+    printf '%b\n' "${BOLD}Commands${NC}"
+    for cmd in git brew stow; do
+      if command -v "$cmd" >/dev/null 2>&1; then
+        printf '  %s: %s\n' "$cmd" "$(command -v "$cmd")"
+      else
+        printf '  %s: missing\n' "$cmd"
+      fi
+    done
+    printf '\n'
+    printf '%b\n' "${BOLD}Packages${NC}"
+    "$DOTFILES_DIR/scripts/stow-packages.sh" --list | sed 's/^/  /'
+    printf '\n'
+    printf '%b\n' "${BOLD}Submodules${NC}"
+    run_in_repo git submodule status || true
+    ;;
+  install-cli)
+    require_repo
+    exec "$DOTFILES_DIR/scripts/install-cli.sh" "$@"
+    ;;
+  *)
+    die "Unknown command: $COMMAND
+
+Run 'dotfiles help' to see available commands."
+    ;;
+esac

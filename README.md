@@ -1,156 +1,129 @@
-# 🚀 Dotfiles
+# Dotfiles
 
-My personal terminal configuration for macOS. One command to set up a complete development environment.
+This repo is the portable source of truth for my shell and terminal config. It is organized as Stow packages so I can recreate the same setup on any macOS machine with a small number of commands.
 
-![Terminal Preview](https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png)
+## Primary Workflow
 
-## ⚡ Quick Install
+1. Clone the repo.
+2. Install packages from the Brewfile if needed.
+3. Stow the packages into `$HOME`.
 
-```bash
-git clone https://github.com/YOUR_USER/dotfiles.git ~/dotfiles
-cd ~/dotfiles && ./setup.sh
-```
-
-Or run directly from the web:
+Quick start:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USER/dotfiles/main/setup.sh | bash
-```
-
-## 📦 What's Included
-
-### Shell & Prompt
-- **ZSH** with [Zinit](https://github.com/zdharma-continuum/zinit) plugin manager (fast!)
-- **Starship** prompt with custom config
-- Plugins: syntax-highlighting, autosuggestions, completions
-
-### Modern CLI Tools
-| Tool | Replaces | Description |
-|------|----------|-------------|
-| [eza](https://github.com/eza-community/eza) | `ls` | Modern file listing with icons |
-| [bat](https://github.com/sharkdp/bat) | `cat` | Syntax highlighted file viewer |
-| [fd](https://github.com/sharkdp/fd) | `find` | Fast file finder |
-| [ripgrep](https://github.com/BurntSushi/ripgrep) | `grep` | Fast text search |
-| [fzf](https://github.com/junegunn/fzf) | - | Fuzzy finder for everything |
-| [zoxide](https://github.com/ajeetdsouza/zoxide) | `cd` | Smart directory jumping |
-
-### Editor & Terminal
-- **Neovim** - Modern vim
-- **Tmux** with [TPM](https://github.com/tmux-plugins/tpm) and Catppuccin theme
-- **Kitty** / **Alacritty** terminal configs
-
-### Git & Development
-- **Lazygit** - Terminal UI for git
-- **Lazydocker** - Terminal UI for Docker
-- **gh** - GitHub CLI
-
-### Kubernetes
-- **kubectl** - K8s CLI
-- **k9s** - Terminal K8s dashboard
-- **helm** - K8s package manager
-- **kubectx** - Context/namespace switcher
-
-### Node.js
-- **NVM** - Node version manager (lazy-loaded for speed)
-- **Bun** - Fast JavaScript runtime
-
-## 🎨 Theme
-
-Using [Catppuccin Mocha](https://github.com/catppuccin/catppuccin) across all tools for a consistent look.
-
-## 📁 Structure
-
-```
-~/dotfiles/
-├── setup.sh           # Main installation script
-├── Brewfile           # Homebrew packages
-├── zsh/
-│   └── .zshrc         # ZSH configuration
-├── tmux/
-│   └── tmux.conf      # Tmux configuration
-├── starship/
-│   └── starship.toml  # Starship prompt config
-├── kitty/
-│   └── kitty.conf     # Kitty terminal config
-├── alacritty/
-│   └── alacritty.toml # Alacritty terminal config
-├── lazygit/
-│   └── config.yml     # Lazygit config
-├── yazi/
-│   └── yazi.toml      # Yazi file manager config
-├── btop/
-│   └── btop.conf      # Btop system monitor config
-├── k9s/
-│   └── config.yaml    # K9s kubernetes config
-├── git/
-│   └── .gitconfig     # Git configuration
-└── nvim/              # Neovim config (optional)
-```
-
-## ⌨️ Key Bindings
-
-### ZSH
-| Key | Action |
-|-----|--------|
-| `Ctrl+R` | Fuzzy search history |
-| `Ctrl+T` | Fuzzy find files |
-| `Alt+C` | Fuzzy cd to directory |
-
-### Tmux (prefix: `Ctrl-s`)
-| Key | Action |
-|-----|--------|
-| `prefix + r` | Reload config |
-| `prefix + s` | Sesh session picker |
-| `prefix + h/j/k/l` | Navigate panes |
-| `prefix + I` | Install plugins |
-
-### Useful Aliases
-| Alias | Command |
-|-------|---------|
-| `v` | `nvim` |
-| `ls` | `eza -lha` |
-| `cat` | `bat` |
-| `lzg` | `lazygit` |
-| `lzd` | `lazydocker` |
-| `k` | `kubectl` |
-| `gst` | `git status` |
-| `gp` | `git push` |
-| `gph` | `git push origin head` |
-
-### Functions
-| Function | Description |
-|----------|-------------|
-| `mux` | Start/attach tmux with session restore |
-| `fcd` | Fuzzy cd to directory |
-| `fe` | Fuzzy find and edit file |
-| `local_address` | Get local IP address |
-
-## 🔧 Customization
-
-1. Update `git/.gitconfig` with your name and email
-2. Modify `Brewfile` to add/remove packages
-3. Adjust themes in individual config files
-
-## 📝 Post-Install
-
-1. **Restart terminal** or `exec zsh`
-2. **Install tmux plugins**: `prefix + I` (Ctrl-s + I)
-3. **Install Node.js**: `nvm install --lts`
-4. **Set git identity**:
-   ```bash
-   git config --global user.name "Your Name"
-   git config --global user.email "your@email.com"
-   ```
-
-## 🔄 Updating
-
-```bash
+git clone --recurse-submodules https://github.com/parabolabam/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-git pull
-./setup.sh
+brew bundle --file Brewfile
+./scripts/stow-packages.sh
 ```
 
-## 📄 License
+If you already cloned the repo without submodules, run this once before stowing:
 
-MIT - Do whatever you want with it!
+```bash
+git submodule update --init --recursive
+```
 
+If you want the full bootstrap path, `./setup.sh` still exists and now delegates the symlink step to `./scripts/stow-packages.sh`.
+
+## Repo Layout
+
+Each top-level directory is a Stow package. Files underneath mirror their destination paths in `$HOME`.
+
+```text
+dotfiles/
+├── stow-packages.txt
+├── scripts/stow-packages.sh
+├── Brewfile
+├── setup.sh
+├── zsh/
+├── git/
+├── ssh/
+├── tmux/
+├── kitty/
+├── alacritty/
+├── starship/
+├── lazygit/
+├── yazi/
+├── btop/
+├── k9s/
+├── claude/
+├── gemini/
+└── nvim/
+```
+
+The `nvim/.config/nvim` directory is a Git submodule that points at `https://github.com/parabolabam/LazyVimStarter`.
+
+## Stow Usage
+
+List all configured packages:
+
+```bash
+./scripts/stow-packages.sh --list
+```
+
+Restow everything:
+
+```bash
+./scripts/stow-packages.sh
+```
+
+Adopt existing files into a package before restowing:
+
+```bash
+./scripts/stow-packages.sh --adopt zsh tmux
+```
+
+Unstow one package:
+
+```bash
+./scripts/stow-packages.sh --delete nvim
+```
+
+## Brew Usage
+
+Audit package drift against the Brewfile:
+
+```bash
+./scripts/brew-sync.sh audit
+```
+
+Install or restore everything declared in the Brewfile:
+
+```bash
+./scripts/brew-sync.sh install
+```
+
+Preview packages that are installed locally but not declared in the Brewfile:
+
+```bash
+./scripts/brew-sync.sh cleanup-preview
+```
+
+Actually remove packages not declared in the Brewfile:
+
+```bash
+./scripts/brew-sync.sh cleanup-force
+```
+
+Rebuild a machine from the repo package set and restow configs:
+
+```bash
+./scripts/rebuild-machine.sh
+```
+
+## Portability Rules
+
+Keep in this repo:
+- shell/editor/tool config that should follow you to another machine
+- theme files, aliases, tmux config, Neovim config, and portable app settings
+
+Keep out of this repo:
+- credentials, tokens, OAuth state, cloud configs, logs, caches, history files
+- auto-generated backups and app runtime state
+- host-specific overrides that only make sense on one machine
+
+## Notes
+
+- `~/dotfiles` is the source of truth.
+- `~/.config` is the live target directory after symlinks are applied.
+- The supported path for now is Homebrew + Stow.

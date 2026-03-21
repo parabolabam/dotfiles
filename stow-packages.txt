@@ -1,0 +1,17 @@
+# Stow packages in apply order.
+# One package per line. Blank lines and comments are ignored.
+
+zsh
+git
+ssh
+tmux
+kitty
+alacritty
+starship
+lazygit
+yazi
+btop
+k9s
+claude
+gemini
+nvim

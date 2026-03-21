@@ -14,3 +14,6 @@ tab_size = 2
 max_width = 600
 max_height = 900
 
+[[plugin.prepend_previewers]]
+url = "*.csv"
+run = 'piper -- csvlens  "$1"'

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ============================================================================
 #  🚀 Dotfiles Setup - One command to rule them all
-#  Usage: curl -fsSL https://raw.githubusercontent.com/YOUR_USER/dotfiles/main/setup.sh | bash
+#  Usage: curl -fsSL https://raw.githubusercontent.com/parabolabam/dotfiles/main/setup.sh | bash
 #  Or:    ./setup.sh
 # ============================================================================
 
@@ -42,9 +42,13 @@ log_success "Running on macOS"
 # ============================================================================
 if [[ ! -d "$DOTFILES_DIR" ]]; then
     log_header "📦 Cloning Dotfiles"
-    git clone "$REPO_URL" "$DOTFILES_DIR"
+    git clone --recurse-submodules "$REPO_URL" "$DOTFILES_DIR"
     cd "$DOTFILES_DIR"
 fi
+
+log_step "Syncing Git submodules..."
+git -C "$DOTFILES_DIR" submodule update --init --recursive
+log_success "Git submodules ready"
 
 # ============================================================================
 #  Install Homebrew
@@ -153,33 +157,13 @@ log_success "Directories created"
 # ============================================================================
 log_header "🔗 Symlinking Dotfiles with Stow"
 
-cd "$DOTFILES_DIR"
-
-# Create required directories first
-mkdir -p "$HOME/.ssh"
-chmod 700 "$HOME/.ssh"
-mkdir -p "$HOME/.config"
-
-# Stow all packages (each subdirectory is a "package")
-PACKAGES=(zsh git ssh tmux kitty alacritty starship lazygit yazi btop k9s claude gemini)
-for pkg in "${PACKAGES[@]}"; do
-    if [[ -d "$DOTFILES_DIR/$pkg" ]]; then
-        log_step "Stowing $pkg..."
-        # Remove existing symlinks/files that might conflict
-        stow -D "$pkg" -t "$HOME" 2>/dev/null || true
-        # Stow the package
-        if stow -R "$pkg" -t "$HOME" 2>/dev/null; then
-            log_success "Stowed $pkg"
-        else
-            log_warning "Failed to stow $pkg (may have conflicts)"
-        fi
-    fi
-done
-
-# Neovim (if you want to manage it here)
-if [[ -d "$DOTFILES_DIR/nvim" ]] && [[ -n "$(ls -A $DOTFILES_DIR/nvim 2>/dev/null)" ]]; then
-    log_step "Stowing nvim..."
-    stow -R "nvim" -t "$HOME" 2>/dev/null && log_success "Stowed nvim" || log_warning "Failed to stow nvim"
+if [[ -x "$DOTFILES_DIR/scripts/stow-packages.sh" ]]; then
+    log_step "Applying packages from stow-packages.txt..."
+    "$DOTFILES_DIR/scripts/stow-packages.sh" --target "$HOME"
+    log_success "Dotfiles stowed"
+else
+    log_error "scripts/stow-packages.sh is missing or not executable"
+    exit 1
 fi
 
 # ============================================================================
@@ -248,4 +232,3 @@ ${YELLOW}Next steps:${NC}
 
 ${PURPLE}Enjoy your new setup! 🚀${NC}
 "
-

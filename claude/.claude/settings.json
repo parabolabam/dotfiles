@@ -1,21 +1,4 @@
 {
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.claude/notify-on-stop.sh"
-          }
-        ]
-      }
-    ]
-  },
-  "enabledPlugins": {
-    "pyright-lsp@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true
-  },
-  "alwaysThinkingEnabled": true,
   "permissions": {
     "allow": [
       "Bash(curl:*)",
@@ -40,5 +23,29 @@
       "mcp__gitlab__get_file_contents"
     ],
     "defaultMode": "plan"
-  }
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/notify-on-stop.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "$HOME/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "medium",
+  "skipDangerousModePermissionPrompt": true
 }

@@ -1,0 +1,4 @@
+^/\.config/nvim/\.git$
+^/\.config/nvim/\.gitignore$
+^/\.config/nvim/LICENSE$
+^/\.config/nvim/README\.md$

@@ -146,6 +146,133 @@ alias k9s-dev='KUBECONFIG="$HOME/.kube/config" k9s --context dt-dev-euc1'
 #  Functions
 # ============================================================================
 
+# Dotfiles package helpers
+bi() {
+  dotfiles add "$1" --brew --install "${@:2}"
+}
+
+bci() {
+  dotfiles add "$1" --cask --install "${@:2}"
+}
+
+_dotfiles_brew_install() {
+  local kind="brew"
+  local specs=()
+  local arg=""
+
+  while (( $# )); do
+    arg="$1"
+    shift
+    case "$arg" in
+      --cask)
+        kind="cask"
+        ;;
+      --formula|--formulae)
+        kind="brew"
+        ;;
+      --*)
+        return 1
+        ;;
+      *)
+        specs+=("$arg")
+        ;;
+    esac
+  done
+
+  (( ${#specs[@]} > 0 )) || return 1
+
+  local spec=""
+  local package=""
+  local tap=""
+  local -a add_args
+
+  for spec in "${specs[@]}"; do
+    package="${spec##*/}"
+    tap=""
+    [[ "$spec" == */* ]] && tap="${spec%/*}"
+
+    add_args=("$package")
+    if [[ "$kind" == "cask" ]]; then
+      add_args+=(--cask-name "$spec")
+    else
+      add_args+=(--brew-name "$spec")
+    fi
+    [[ -n "$tap" ]] && add_args+=(--tap "$tap")
+    add_args+=(--install)
+
+    dotfiles add "${add_args[@]}"
+  done
+}
+
+_dotfiles_brew_uninstall() {
+  local kind=""
+  local specs=()
+  local arg=""
+  local zap=false
+
+  while (( $# )); do
+    arg="$1"
+    shift
+    case "$arg" in
+      --cask)
+        kind="cask"
+        ;;
+      --formula|--formulae)
+        kind="brew"
+        ;;
+      --zap)
+        zap=true
+        ;;
+      --*)
+        return 1
+        ;;
+      *)
+        specs+=("$arg")
+        ;;
+    esac
+  done
+
+  (( ${#specs[@]} > 0 )) || return 1
+
+  local spec=""
+  local package=""
+  local tap=""
+  local -a remove_args
+
+  for spec in "${specs[@]}"; do
+    package="${spec##*/}"
+    tap=""
+    [[ "$spec" == */* ]] && tap="${spec%/*}"
+
+    remove_args=("$package")
+    if [[ "$kind" == "cask" ]]; then
+      remove_args+=(--cask-name "$spec")
+      [[ "$zap" == true ]] && remove_args+=(--zap)
+    elif [[ "$kind" == "brew" || -n "$tap" ]]; then
+      remove_args+=(--brew-name "$spec")
+    fi
+    [[ -n "$tap" ]] && remove_args+=(--tap "$tap")
+
+    dotfiles remove "${remove_args[@]}"
+  done
+}
+
+brew() {
+  if [[ "${1:-}" == "install" ]]; then
+    shift
+    if _dotfiles_brew_install "$@"; then
+      return 0
+    fi
+  elif [[ "${1:-}" == "uninstall" ]]; then
+    shift
+    if _dotfiles_brew_uninstall "$@"; then
+      return 0
+    fi
+  fi
+
+  command brew "$@"
+}
+
 # Tmux session manager
 mux() {
   command -v tmux >/dev/null || return

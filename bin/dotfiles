@@ -33,6 +33,7 @@ ${BOLD}Usage${NC}
 
 ${BOLD}Commands${NC}
   add         Create or adopt a Stow package and optionally register Brew entries
+  remove      Unstow a package, remove repo entries, and optionally uninstall it
   stow        Restow one or more packages
   unstow      Remove one or more package links
   list        Print configured Stow packages
@@ -46,6 +47,7 @@ ${BOLD}Commands${NC}
 
 ${BOLD}Examples${NC}
   dotfiles add atuin --brew
+  dotfiles remove atuin --brew
   dotfiles add zed --cask --install
   dotfiles stow nvim tmux
   dotfiles unstow kitty
@@ -125,6 +127,10 @@ case "$COMMAND" in
   add)
     require_repo
     exec "$DOTFILES_DIR/scripts/add-package.sh" "$@"
+    ;;
+  remove|rm)
+    require_repo
+    exec "$DOTFILES_DIR/scripts/remove-package.sh" "$@"
     ;;
   brew)
     require_repo

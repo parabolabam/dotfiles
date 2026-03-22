@@ -159,6 +159,7 @@ _dotfiles_brew_install() {
   local kind="brew"
   local specs=()
   local arg=""
+  local passthrough_status=64
 
   while (( $# )); do
     arg="$1"
@@ -171,7 +172,7 @@ _dotfiles_brew_install() {
         kind="brew"
         ;;
       --*)
-        return 1
+        return "$passthrough_status"
         ;;
       *)
         specs+=("$arg")
@@ -179,20 +180,23 @@ _dotfiles_brew_install() {
     esac
   done
 
-  (( ${#specs[@]} > 0 )) || return 1
+  (( ${#specs[@]} > 0 )) || return "$passthrough_status"
 
   local spec=""
   local package=""
   local tap=""
   local -a add_args
+  local spec_kind=""
 
   for spec in "${specs[@]}"; do
     package="${spec##*/}"
     tap=""
     [[ "$spec" == */* ]] && tap="${spec%/*}"
+    spec_kind="$kind"
+    [[ "$spec" == "codex" && "$kind" == "brew" ]] && spec_kind="cask"
 
     add_args=("$package")
-    if [[ "$kind" == "cask" ]]; then
+    if [[ "$spec_kind" == "cask" ]]; then
       add_args+=(--cask-name "$spec")
     else
       add_args+=(--brew-name "$spec")
@@ -209,6 +213,7 @@ _dotfiles_brew_uninstall() {
   local specs=()
   local arg=""
   local zap=false
+  local passthrough_status=64
 
   while (( $# )); do
     arg="$1"
@@ -224,7 +229,7 @@ _dotfiles_brew_uninstall() {
         zap=true
         ;;
       --*)
-        return 1
+        return "$passthrough_status"
         ;;
       *)
         specs+=("$arg")
@@ -232,7 +237,7 @@ _dotfiles_brew_uninstall() {
     esac
   done
 
-  (( ${#specs[@]} > 0 )) || return 1
+  (( ${#specs[@]} > 0 )) || return "$passthrough_status"
 
   local spec=""
   local package=""
@@ -258,19 +263,32 @@ _dotfiles_brew_uninstall() {
 }
 
 brew() {
+  local -a original_args
+  local exit_code=0
+
+  original_args=("$@")
+
   if [[ "${1:-}" == "install" ]]; then
     shift
-    if _dotfiles_brew_install "$@"; then
+    _dotfiles_brew_install "$@"
+    exit_code=$?
+    if [[ $exit_code -eq 0 ]]; then
       return 0
+    elif [[ $exit_code -ne 64 ]]; then
+      return "$exit_code"
     fi
   elif [[ "${1:-}" == "uninstall" ]]; then
     shift
-    if _dotfiles_brew_uninstall "$@"; then
+    _dotfiles_brew_uninstall "$@"
+    exit_code=$?
+    if [[ $exit_code -eq 0 ]]; then
       return 0
+    elif [[ $exit_code -ne 64 ]]; then
+      return "$exit_code"
     fi
   fi
 
-  command brew "$@"
+  command brew "${original_args[@]}"
 }
 
 # Tmux session manager

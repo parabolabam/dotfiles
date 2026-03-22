@@ -15,4 +15,3 @@ k9s
 claude
 gemini
 nvim
-codex

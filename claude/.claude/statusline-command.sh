@@ -62,9 +62,7 @@ icon_folder=$'\xef\x81\xbc'  # U+F07C - folder open (cwd)
 icon_branch=$'\xee\x82\xa0'  # U+E0A0 - git branch
 
 # Render a powerline line with overlapping round segments
-# Args: "bg|fg|text" strings
-# First segment gets round_l on left, between segments round_r overlaps
-# into next bg, last segment gets round_r to close
+# Each new segment's left edge covers the previous segment
 render_line() {
   local segs=("$@")
   local i=0
@@ -73,11 +71,11 @@ render_line() {
     IFS='|' read -r bg fg text <<< "$seg"
 
     if [ "$i" -eq 0 ]; then
-      # First segment: round left opening
+      # First segment: round left opening on default bg
       printf "\033[38;2;%sm%s" "$bg" "$round_l"
     else
-      # Between segments: round right of prev overlapping into this bg
-      printf "\033[38;2;%sm\033[48;2;%sm%s" "$prev_bg" "$bg" "$round_r"
+      # Next segment's left edge overlaps into previous segment
+      printf "\033[38;2;%sm\033[48;2;%sm%s" "$bg" "$prev_bg" "$round_l"
     fi
 
     # Segment content
@@ -87,7 +85,7 @@ render_line() {
     i=$((i + 1))
   done
 
-  # Close last segment with round right
+  # Close last segment with round right on default bg
   printf "\033[0m\033[38;2;%sm%s\033[0m" "$prev_bg" "$round_r"
 }
 

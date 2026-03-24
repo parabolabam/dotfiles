@@ -76,7 +76,7 @@ if [[ -f "$DOTFILES_DIR/Brewfile" ]]; then
 else
     log_warning "No Brewfile found, installing essential packages..."
     
-    FORMULAS=(zsh starship eza bat fd ripgrep fzf zoxide neovim tmux git lazygit lazydocker gh kubernetes-cli k9s helm kubectx jq nvm bun stow neofetch btop thefuck yazi sesh)
+    FORMULAS=(zsh starship eza bat fd ripgrep fzf zoxide neovim tmux git lazygit lazydocker gh kubernetes-cli k9s helm kubectx jq nvm bun stow neofetch btop thefuck yazi television)
     
     for pkg in "${FORMULAS[@]}"; do
         brew list "$pkg" &>/dev/null || brew install "$pkg"

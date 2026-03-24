@@ -77,6 +77,11 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 # Zoxide
 eval "$(zoxide init zsh)"
 
+# Television
+if command -v tv >/dev/null 2>&1; then
+  eval "$(tv init zsh)"
+fi
+
 # FZF
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 export FZF_CTRL_R_OPTS="
@@ -115,6 +120,7 @@ alias vim="nvim"
 alias cat="bat"
 alias lzd="lazydocker"
 alias lzg="lazygit"
+alias tvi="tv"
 
 # Git
 alias g="git"

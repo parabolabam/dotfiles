@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+choice="$(
+  tv tmux-panes \
+    --no-remote
+)"
+
+target="$choice"
+
+if [[ -n "$target" ]]; then
+  tmux switch-client -t "${target%.*}"
+  tmux select-pane -t "$target"
+fi

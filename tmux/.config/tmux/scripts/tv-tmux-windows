@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+choice="$(
+  tv tmux-windows \
+    --no-remote
+)"
+
+target="$choice"
+
+if [[ -n "$target" ]]; then
+  tmux switch-client -t "$target"
+fi

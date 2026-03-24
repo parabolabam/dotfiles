@@ -1,0 +1,21 @@
+[metadata]
+name = "tmux-panes"
+description = "List and switch between tmux panes"
+requirements = ["tmux"]
+
+[source]
+command = "tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index}\t#{session_name}:#{window_index}\t#{window_name}\t#{pane_current_command}\t#{pane_current_path}'"
+display = "{split:\t:1} {split:\t:2} | {split:\t:3} | {split:\t:4}"
+output = "{split:\t:0}"
+ansi = true
+
+[preview]
+command = "tmux capture-pane -e -J -p -S -120 -t '{split:\t:0}' 2>/dev/null || echo 'No preview available'"
+
+[ui]
+preview_panel = { size = 70 }
+
+[actions.select]
+description = "Switch to the selected pane"
+command = "tmux switch-client -t '{split:\t:1}' \\; select-pane -t '{split:\t:0}'"
+mode = "execute"

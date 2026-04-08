@@ -3,7 +3,8 @@ set -euo pipefail
 
 choice="$(
   tv tmux-windows \
-    --no-remote
+    --no-remote \
+    --no-sort
 )"
 
 target="$choice"

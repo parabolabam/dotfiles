@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cur="$(tmux display-message -p '#{session_name}:#{window_index}')"
+tab=$'\t'
+fmt="#{session_name}:#{window_index}${tab}#{window_name}${tab}#{pane_current_command}"
+
+tmux list-windows -a -F "$fmt" | awk -F'\t' -v c="$cur" '
+  $1 == c { print; next }
+  { buf = buf $0 ORS }
+  END { printf "%s", buf }
+'

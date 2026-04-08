@@ -79,7 +79,8 @@
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true
+    "gopls-lsp@claude-plugins-official": true,
+    "modularity@vladikk-modularity": true
   },
   "extraKnownMarketplaces": {
     "fullstack-dev-skills": {
@@ -87,10 +88,16 @@
         "source": "github",
         "repo": "jeffallan/claude-skills"
       }
+    },
+    "vladikk-modularity": {
+      "source": {
+        "source": "github",
+        "repo": "vladikk/modularity"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "medium",
-  "skipDangerousModePermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "skipDangerousModePermissionPrompt": true
 }

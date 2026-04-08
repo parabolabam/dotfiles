@@ -4,7 +4,7 @@ description = "List and switch between tmux windows"
 requirements = ["tmux"]
 
 [source]
-command = "tmux list-windows -a -F '#{session_name}:#{window_index}\t#{window_name}\t#{pane_current_command}'"
+command = "~/.config/tmux/scripts/tv-list-windows"
 display = "{split:\t:0} - {split:\t:1} ({split:\t:2})"
 output = "{split:\t:0}"
 ansi = true

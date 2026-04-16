@@ -16,3 +16,12 @@ claude
 gemini
 nvim
 television
+pynvim
+jupyter_client
+jupytext
+nbformat
+cairosvg
+pnglatex
+pyperclip
+pillow
+rtk

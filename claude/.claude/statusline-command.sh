@@ -8,6 +8,10 @@ model_name=$(echo "$input" | jq -r '.model.display_name // "Claude"')
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd')
 remaining=$(echo "$input" | jq -r '.context_window.remaining_percentage // empty')
 model_id=$(echo "$input" | jq -r '.model.id // ""')
+input_tokens=$(echo "$input" | jq -r '.context_window.current_usage.input_tokens // 0')
+cache_read_tokens=$(echo "$input" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0')
+total_tokens=$(( input_tokens + cache_read_tokens ))
+token_k=$(( total_tokens / 1000 ))
 
 # Shorten cwd: show last 2 path components
 dir_name=$(echo "$cwd" | sed "s|$HOME|~|" | awk -F/ '{if(NF>3) printf "…/%s/%s",$(NF-1),$NF; else print}')
@@ -134,5 +138,15 @@ if [ -n "$branch" ]; then
 else
   line2+=("${rgb_mauve}|${rgb_crust}| ${icon_branch} ")
 fi
+
+# Token usage — always visible, color escalates near 350k
+if [ "$token_k" -ge 330 ] 2>/dev/null; then
+  tok_bg="$rgb_red"; tok_icon="🔥"
+elif [ "$token_k" -ge 300 ] 2>/dev/null; then
+  tok_bg="$rgb_peach"; tok_icon="⚡"
+else
+  tok_bg="$rgb_lavender"; tok_icon="💬"
+fi
+line2+=("${tok_bg}|${rgb_crust}| ${tok_icon} ${token_k}k ")
 
 render_line "${line2[@]}"

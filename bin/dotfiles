@@ -49,7 +49,7 @@ ${BOLD}Examples${NC}
   dotfiles add atuin --brew
   dotfiles remove atuin --brew
   dotfiles add zed --cask --install
-  dotfiles stow nvim tmux
+  dotfiles stow nvim herdr
   dotfiles unstow kitty
   dotfiles brew audit
   dotfiles rebuild --adopt

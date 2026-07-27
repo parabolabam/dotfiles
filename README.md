@@ -12,7 +12,7 @@ This repo is the portable source of truth for my shell and terminal config. It i
 
 In practice:
 - software installation lives in `Brewfile`
-- tracked config lives in a Stow package like `zsh/`, `tmux/`, or `nvim/`
+- tracked config lives in a Stow package like `zsh/`, `herdr/`, or `nvim/`
 - `dotfiles rebuild` restores both sides: Brew packages and symlinked config
 
 ## Install
@@ -56,7 +56,7 @@ dotfiles stow
 Restow only specific packages:
 
 ```bash
-dotfiles stow zsh tmux nvim
+dotfiles stow zsh herdr nvim
 ```
 
 Remove one package's symlinks:
@@ -99,7 +99,7 @@ dotfiles/
 ├── zsh/
 ├── git/
 ├── ssh/
-├── tmux/
+├── herdr/
 ├── kitty/
 ├── alacritty/
 ├── starship/
@@ -275,7 +275,7 @@ dotfiles brew cleanup-force
 
 Keep in this repo:
 - shell/editor/tool config that should follow you to another machine
-- theme files, aliases, tmux config, Neovim config, and portable app settings
+- theme files, aliases, herdr config, Neovim config, and portable app settings
 
 Keep out of this repo:
 - credentials, tokens, OAuth state, cloud configs, logs, caches, history files

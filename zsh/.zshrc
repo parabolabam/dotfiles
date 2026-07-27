@@ -297,15 +297,12 @@ brew() {
   command brew "${original_args[@]}"
 }
 
-# Tmux session manager
+# Herdr workspace manager
+# Launches or attaches the persistent session. No resurrect-style restore step:
+# the herdr server persists workspaces to session.json and restores on start.
 mux() {
-  command -v tmux >/dev/null || return
-  if ! pgrep -qx tmux 2>/dev/null; then
-    tmux new -d -s delete-me
-    tmux run-shell "$XDG_CONFIG_HOME/tmux/plugins/tmux-resurrect/scripts/restore.sh" 2>/dev/null
-    tmux kill-session -t delete-me 2>/dev/null
-  fi
-  tmux attach
+  command -v herdr >/dev/null || return
+  herdr "$@"
 }
 
 # Fuzzy cd
@@ -333,9 +330,9 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # ============================================================================
-#  Auto-tmux (set AUTO_TMUX=1 to enable)
+#  Auto-herdr (set AUTO_HERDR=1 to enable)
 # ============================================================================
-[[ -o interactive && -z "$TMUX" && "${AUTO_TMUX:-0}" = "1" ]] && mux
+[[ -o interactive && -z "$HERDR_ENV" && "${AUTO_HERDR:-0}" = "1" ]] && mux
 
 export PATH="$HOME/.local/bin:$PATH"
 # Add to ~/.zshrc or ~/.bashrc

@@ -28,13 +28,6 @@ cache/
 *.backup.*
 
 
-# Tmux plugins (managed by TPM)
-tmux/.config/tmux/plugins/
-tmux/plugins/
-
-# Machine-specific data (not portable)
-.local/share/tmux/resurrect/
-
 # Herdr runtime state (~/.config/herdr is a whole-dir stow symlink into this
 # repo, so the server writes its state here — only config.toml is portable)
 herdr/.config/herdr/session.json

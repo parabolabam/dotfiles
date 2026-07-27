@@ -76,7 +76,7 @@ if [[ -f "$DOTFILES_DIR/Brewfile" ]]; then
 else
     log_warning "No Brewfile found, installing essential packages..."
     
-    FORMULAS=(zsh starship eza bat fd ripgrep fzf zoxide neovim tmux git lazygit lazydocker gh kubernetes-cli k9s helm kubectx jq nvm bun stow neofetch btop thefuck yazi television)
+    FORMULAS=(zsh starship eza bat fd ripgrep fzf zoxide neovim herdr git lazygit lazydocker gh kubernetes-cli k9s helm kubectx jq nvm bun stow neofetch btop thefuck yazi television)
     
     for pkg in "${FORMULAS[@]}"; do
         brew list "$pkg" &>/dev/null || brew install "$pkg"
@@ -109,20 +109,6 @@ if [[ ! -f ~/.fzf.zsh ]]; then
     log_success "FZF configured"
 else
     log_success "FZF already configured"
-fi
-
-# ============================================================================
-#  Setup Tmux Plugin Manager
-# ============================================================================
-log_header "🖥️  Tmux Plugin Manager"
-
-TPM_PATH="$HOME/.tmux/plugins/tpm"
-if [[ ! -d "$TPM_PATH" ]]; then
-    log_step "Installing TPM..."
-    git clone https://github.com/tmux-plugins/tpm "$TPM_PATH"
-    log_success "TPM installed"
-else
-    log_success "TPM already installed"
 fi
 
 # ============================================================================
@@ -234,13 +220,13 @@ ${CYAN}What was installed:${NC}
   • ZSH with Zinit plugin manager
   • Starship prompt
   • Modern CLI tools (eza, bat, fd, ripgrep, fzf, zoxide)
-  • Neovim, Tmux, Lazygit, Lazydocker
+  • Neovim, Herdr, Lazygit, Lazydocker
   • Kubernetes tools (kubectl, k9s, helm)
   • Node.js management (nvm, bun)
 
 ${YELLOW}Next steps:${NC}
   1. Restart your terminal (or run: exec zsh)
-  2. Install tmux plugins: prefix + I (Ctrl-s + I)
+  2. Start your workspace: mux (prefix is Ctrl-s)
   3. Install Node.js: nvm install --lts
 
 ${PURPLE}Enjoy your new setup! 🚀${NC}

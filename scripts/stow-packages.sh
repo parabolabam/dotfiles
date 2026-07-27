@@ -20,7 +20,7 @@ Options:
 
 Examples:
   ./scripts/stow-packages.sh
-  ./scripts/stow-packages.sh --adopt zsh tmux
+  ./scripts/stow-packages.sh --adopt zsh herdr
   ./scripts/stow-packages.sh --delete nvim
 EOF
 }

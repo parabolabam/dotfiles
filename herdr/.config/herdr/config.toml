@@ -1,0 +1,47 @@
+# ============================================================================
+#  Herdr Configuration
+#  Replaces the old tmux setup. Run `herdr --default-config` to see all options.
+# ============================================================================
+
+# Skip the first-run notification setup prompt.
+onboarding = false
+
+# ============================================================================
+#  Keys
+# ============================================================================
+[keys]
+# Prefix key — carried over from tmux (`unbind C-b; set -g prefix C-s`).
+# Caveat: herdr has no `send-prefix` equivalent, so pressing it twice does not
+# emit a literal ctrl+s the way `bind C-s send-prefix` used to.
+prefix = "ctrl+s"
+
+# Everything else stays on herdr's defaults, which already match the old
+# tmux binds closely:
+#   prefix+h/j/k/l  focus pane left/down/up/right  (was bind h/j/k/l)
+#   prefix+w        workspace picker               (was bind w, tv-tmux-windows)
+#   prefix+g        goto / jump                    (was bind p, tv-tmux-panes)
+#   prefix+v        split vertical
+#   prefix+minus    split horizontal
+#   prefix+shift+r  reload config                  (was bind r)
+#   prefix+?        help
+
+# ============================================================================
+#  Theme
+# ============================================================================
+[theme]
+# Matches the old `@catppuccin_flavor "mocha"`.
+name = "catppuccin"
+
+# ============================================================================
+#  Session persistence (replaces tmux-resurrect)
+# ============================================================================
+# Herdr saves workspaces, tabs, pane layout, and per-pane cwd to
+# ~/.config/herdr/session.json automatically on every change, and restores them
+# on server start — no explicit save keystroke like resurrect's `prefix + a`.
+# [session] resume_agents_on_restore is already true by default, which also
+# resumes Claude/Codex conversations after a restart.
+
+[experimental]
+# Also restore pane scrollback across full server restarts. Experimental and
+# off by default upstream; safe to remove if it misbehaves.
+pane_history = true

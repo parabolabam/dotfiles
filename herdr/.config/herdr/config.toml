@@ -45,3 +45,6 @@ name = "catppuccin"
 # Also restore pane scrollback across full server restarts. Experimental and
 # off by default upstream; safe to remove if it misbehaves.
 pane_history = true
+
+[ui]
+agent_panel_sort = "spaces"

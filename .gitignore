@@ -29,10 +29,12 @@ cache/
 
 
 # Herdr runtime state (~/.config/herdr is a whole-dir stow symlink into this
-# repo, so the server writes its state here — only config.toml is portable)
-herdr/.config/herdr/session.json
-herdr/.config/herdr/*.log
-herdr/.config/herdr/release-notes.json
+# repo, so the server writes its state here). Whitelist rather than blocklist:
+# the server keeps adding state files (session.json, *.log, release-notes.json,
+# .plugins.lock, session-history.json, ...) and only config.toml is portable.
+herdr/.config/herdr/*
+!herdr/.config/herdr/config.toml
+!herdr/.config/herdr/.gitkeep
 
 # Claude Code (sensitive/machine-specific)
 claude/.claude/settings.local.json

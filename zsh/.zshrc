@@ -355,15 +355,3 @@ export PATH="$HOME/.local/bin:$PATH"
 # Added by Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 command -v tv >/dev/null 2>&1 && eval "$(tv init zsh)"
-# >>> llmtrim >>>
-if command -v llmtrim >/dev/null 2>&1 && llmtrim _alive 2>/dev/null; then
-    export HTTPS_PROXY='http://127.0.0.1:43117'
-    export HTTP_PROXY='http://127.0.0.1:43117'
-    export NO_PROXY='localhost,127.0.0.1,::1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,169.254.0.0/16,fd00::/8,*.local'
-    export no_proxy='localhost,127.0.0.1,::1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,169.254.0.0/16,fd00::/8,*.local'
-    export NODE_EXTRA_CA_CERTS='/Users/vladislav.sorokin/.llmtrim/ca.pem'
-    export NODE_USE_ENV_PROXY='1'
-    export SSL_CERT_FILE='/Users/vladislav.sorokin/.llmtrim/ca-bundle.pem'
-    export CURL_CA_BUNDLE='/Users/vladislav.sorokin/.llmtrim/ca-bundle.pem'
-fi
-# <<< llmtrim <<<

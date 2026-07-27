@@ -46,5 +46,31 @@ name = "catppuccin"
 # off by default upstream; safe to remove if it misbehaves.
 pane_history = true
 
+switch_ascii_input_source_in_prefix = true
+
+# ============================================================================
+#  UI
+# ============================================================================
+# Bare keys must stay above the [ui.*] sub-tables below, or TOML assigns them
+# to whichever sub-table precedes them instead of to [ui].
 [ui]
 agent_panel_sort = "spaces"
+show_agent_labels_on_pane_borders = true
+
+# ============================================================================
+#  Notifications (replaces Claude Code's Stop/Notification hooks)
+# ============================================================================
+# Those hooks shelled out to osascript for a macOS notification on every finish
+# and permission prompt. herdr already tracks agent state via the claude
+# integration hook, so it can report the same two events itself.
+#
+# Note: herdr only notifies for BACKGROUND workspaces — the pane you are
+# looking at stays quiet, which the Stop hook did not respect.
+# [ui.sound] is left at its defaults (enabled, herdr's own audio).
+[ui.toast]
+# In-app popup only; nothing reaches the macOS Notification Center.
+delivery = "herdr"
+delay_seconds = 1
+
+[ui.toast.herdr]
+position = "bottom-right"

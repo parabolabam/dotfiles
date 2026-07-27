@@ -1,7 +1,8 @@
 {
   "env": {
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
-    "CLAUDE_CODE_NO_FLICKER": "1"
+    "CLAUDE_CODE_NO_FLICKER": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "permissions": {
     "allow": [
@@ -30,16 +31,6 @@
   },
   "model": "opus[1m]",
   "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.claude/notify-on-stop.sh"
-          }
-        ]
-      }
-    ],
     "PreCompact": [
       {
         "hooks": [
@@ -60,13 +51,13 @@
         ]
       }
     ],
-    "Notification": [
+    "PreToolUse": [
       {
-        "matcher": "permission_prompt",
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "$HOME/.claude/notify-on-permission.sh"
+            "command": "$HOME/.claude/hooks/rtk-rewrite.sh"
           }
         ]
       }
@@ -78,9 +69,8 @@
   },
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
-    "modularity@vladikk-modularity": true
+    "frontend-design@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "fullstack-dev-skills": {
@@ -94,10 +84,17 @@
         "source": "github",
         "repo": "vladikk/modularity"
       }
+    },
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "medium",
-  "voiceEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
 }

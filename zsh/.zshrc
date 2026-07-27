@@ -10,6 +10,23 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 mkdir -p "$ZDOTDIR" "$XDG_CACHE_HOME"
 
 # ============================================================================
+#  fpath hygiene (must run before zinit and compinit)
+# ============================================================================
+# `brew upgrade zsh` moves the Cellar prefix, but long-running parents (the
+# herdr server, an old login session) keep exporting an FPATH pointing at the
+# previous version's function dir. Children then can't autoload is-at-least,
+# compinit, add-zsh-hook or colors. Drop dead entries, dedupe, and make sure
+# zsh's own version-independent function dir is on the list.
+typeset -U fpath
+fpath=($^fpath(N))
+for _zfp in /opt/homebrew/share/zsh/functions \
+            /usr/local/share/zsh/functions \
+            "/usr/share/zsh/${ZSH_VERSION}/functions"; do
+  [[ -d "$_zfp" ]] && fpath+="$_zfp"
+done
+unset _zfp
+
+# ============================================================================
 #  Zinit Plugin Manager
 # ============================================================================
 ZINIT_HOME="${XDG_DATA_HOME}/zinit/zinit.git"

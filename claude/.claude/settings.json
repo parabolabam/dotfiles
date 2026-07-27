@@ -1,8 +1,9 @@
 {
   "env": {
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_NO_FLICKER": "1",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+    "ENABLE_WRITE_TOOLS": "true"
   },
   "permissions": {
     "allow": [
@@ -29,7 +30,6 @@
     ],
     "defaultMode": "plan"
   },
-  "model": "opus[1m]",
   "hooks": {
     "PreCompact": [
       {
@@ -37,16 +37,6 @@
           {
             "type": "command",
             "command": "$HOME/.claude/notify-on-compact.sh"
-          }
-        ]
-      }
-    ],
-    "WorktreeRemove": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.claude/notify-on-worktree-remove.sh"
           }
         ]
       }
@@ -61,6 +51,28 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/vladislav.sorokin/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "WorktreeRemove": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/notify-on-worktree-remove.sh"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -68,15 +80,37 @@
     "command": "$HOME/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "pyright-lsp@claude-plugins-official": true,
+    "andrej-karpathy-skills@karpathy-skills": true,
+    "frontend-design@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true
+    "ponytail@ponytail": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    },
     "fullstack-dev-skills": {
       "source": {
         "source": "github",
         "repo": "jeffallan/claude-skills"
+      }
+    },
+    "karpathy-skills": {
+      "source": {
+        "source": "github",
+        "repo": "forrestchang/andrej-karpathy-skills"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
       }
     },
     "vladikk-modularity": {
@@ -84,17 +118,17 @@
         "source": "github",
         "repo": "vladikk/modularity"
       }
-    },
-    "anthropic-agent-skills": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/skills"
-      }
     }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }

@@ -24,3 +24,17 @@ pnglatex
 pyperclip
 pillow
 rtk
+opencode
+lfk
+conda
+anaconda
+lazyagent
+claude-squad
+finicky
+gemini-cli
+pipx
+kcat
+herdr
+herd
+grpcurl
+codex

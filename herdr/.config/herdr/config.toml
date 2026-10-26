@@ -30,7 +30,7 @@ prefix = "ctrl+s"
 # ============================================================================
 [theme]
 # Matches the old `@catppuccin_flavor "mocha"`.
-name = "catppuccin"
+name = "kanagawa"
 
 # ============================================================================
 #  Session persistence (replaces tmux-resurrect)
@@ -41,7 +41,9 @@ name = "catppuccin"
 # [session] resume_agents_on_restore is already true by default, which also
 # resumes Claude/Codex conversations after a restart.
 
+auto_switch = false
 [experimental]
+kitty_graphics = true
 # Also restore pane scrollback across full server restarts. Experimental and
 # off by default upstream; safe to remove if it misbehaves.
 pane_history = true
@@ -54,7 +56,7 @@ switch_ascii_input_source_in_prefix = true
 # Bare keys must stay above the [ui.*] sub-tables below, or TOML assigns them
 # to whichever sub-table precedes them instead of to [ui].
 [ui]
-agent_panel_sort = "spaces"
+agent_panel_sort = "priority"
 show_agent_labels_on_pane_borders = true
 
 # ============================================================================
@@ -67,6 +69,7 @@ show_agent_labels_on_pane_borders = true
 # Note: herdr only notifies for BACKGROUND workspaces — the pane you are
 # looking at stays quiet, which the Stop hook did not respect.
 # [ui.sound] is left at its defaults (enabled, herdr's own audio).
+status_indicators = "symbols"
 [ui.toast]
 # In-app popup only; nothing reaches the macOS Notification Center.
 delivery = "herdr"

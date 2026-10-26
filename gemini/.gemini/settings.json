@@ -1,12 +1,4 @@
 {
-  "security": {
-    "auth": {
-      "selectedType": "oauth-personal"
-    }
-  },
-  "ui": {
-    "theme": "Dracula"
-  },
   "general": {
     "vimMode": true
   },
@@ -14,23 +6,32 @@
     "plata": {
       "command": "/Users/vladislav.sorokin/.local/bin/plata-mcp",
       "env": {
+        "ALERTMANAGER_HOST_PROD": "https://alertmanager.prime.diftech.org",
+        "ALERTMANAGER_HOST_STABLE": "https://alertmanager.beta.diftech.org",
+        "ENABLE_WRITE_TOOLS": "true",
+        "GRAFANA_HOST": "https://grafana.diftech.org",
+        "GROWTHBOOK_API_HOST_PROD": "https://growthbook-prod-api.prime.diftech.org",
+        "GROWTHBOOK_API_HOST_STABLE": "https://growthbook-stable-api.beta.diftech.org",
+        "GROWTHBOOK_HOST_PROD": "https://growthbook-prod.prime.diftech.org",
+        "GROWTHBOOK_HOST_STABLE": "https://growthbook-stable.beta.diftech.org",
+        "KAFKA_HOST_PROD": "https://kafkaui.prime.diftech.org",
+        "KAFKA_HOST_STABLE": "https://kafkaui.beta.diftech.org",
         "KEYCLOAK_HOST": "https://keycloak.diftech.org",
         "KIBANA_HOST_PROD": "https://kibana.prime.diftech.org",
         "KIBANA_HOST_STABLE": "https://kibana.beta.diftech.org",
-        "GRAFANA_HOST": "https://grafana.diftech.org",
-        "ALERTMANAGER_HOST_PROD": "https://alertmanager.prime.diftech.org",
-        "ALERTMANAGER_HOST_STABLE": "https://alertmanager.beta.diftech.org",
         "SUPERSET_HOST_PROD": "https://superset.prime.diftech.org",
         "SUPERSET_HOST_STABLE": "https://superset.beta.diftech.org",
-        "KAFKA_HOST_PROD": "https://kafkaui.prime.diftech.org",
-        "KAFKA_HOST_STABLE": "https://kafkaui.beta.diftech.org",
-        "GROWTHBOOK_HOST_PROD": "https://growthbook-prod.prime.diftech.org",
-        "GROWTHBOOK_HOST_STABLE": "https://growthbook-stable.beta.diftech.org",
-        "GROWTHBOOK_API_HOST_PROD": "https://growthbook-prod-api.prime.diftech.org",
-        "GROWTHBOOK_API_HOST_STABLE": "https://growthbook-stable-api.beta.diftech.org",
         "VAULT_HOST_PROD": "https://vault.prime.diftech.org",
         "VAULT_HOST_STABLE": "https://vault.beta.diftech.org"
       }
     }
+  },
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "ui": {
+    "theme": "Dracula"
   }
 }

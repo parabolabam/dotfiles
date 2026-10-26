@@ -56,3 +56,15 @@ gemini/.gemini/google_accounts.json
 gemini/.gemini/installation_id
 gemini/.gemini/state.json
 gemini/.gemini/tmp/
+gemini/.gemini/history/
+gemini/.gemini/projects.json
+gemini/.gemini/settings.json.bak
+gemini/.gemini/trustedFolders.json
+
+# Lazyagent machine-local state
+lazyagent/.config/lazyagent/config.json
+
+# OpenCode generated/session state
+opencode/.config/opencode/herdr-tui-session.js
+opencode/.config/opencode/plugins/herdr-agent-state.js
+opencode/.config/opencode/tui.jsonc

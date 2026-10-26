@@ -1,0 +1,95 @@
+# Mole Cleanup Preview - 2026-10-06 21:19:48
+#
+# How to protect files:
+# 1. Copy any path below to ~/.config/mole/whitelist
+# 2. Run: mo clean --whitelist
+#
+# Example:
+#   /Users/*/Library/Caches/com.example.app
+#
+
+
+=== User essentials ===
+/Users/vladislav.sorokin/Library/Caches/go-build  # 572.1MB
+/Users/vladislav.sorokin/Library/Caches/Snowflake  # 1.2MB
+/Users/vladislav.sorokin/Library/Caches/GeoServices  # 52.6MB
+/Users/vladislav.sorokin/Library/Caches/BraveSoftware  # 438.5MB
+/Users/vladislav.sorokin/Library/Caches/askpermissiond  # 233KB
+/Users/vladislav.sorokin/Library/Caches/claude-cli-nodejs  # 172KB
+/Users/vladislav.sorokin/Library/Caches/@granolaelectron-updater  # 297.6MB
+/Users/vladislav.sorokin/Library/Logs/Baseband  # 0B
+/Users/vladislav.sorokin/Library/Logs/CrashReporter  # 12KB
+
+=== App caches ===
+/Users/vladislav.sorokin/Library/Containers/com.apple.geod/Data/tmp/TemporaryItems  # 0B
+/Users/vladislav.sorokin/Library/Containers/com.apple.geod/Data/tmp/C1E30480-70F0-4464-98F5-355A476F93C9  # 318KB
+/Users/vladislav.sorokin/Library/Caches/GeoServices/Resources  # 51.9MB
+/Users/vladislav.sorokin/Library/Caches/GeoServices/PLReqCounters.enc  # 1KB
+/Users/vladislav.sorokin/Library/Caches/GeoServices/ActiveTileGroup.pbd  # 292KB
+/Users/vladislav.sorokin/Library/Caches/GeoServices/ResourceManifest.pbd  # 318KB
+/Users/vladislav.sorokin/Library/Caches/GeoServices/SearchAttribution.pbd  # 70KB
+/Users/vladislav.sorokin/Library/Caches/com.apple.AppleMediaServices/Metrics  # 623KB
+/Users/vladislav.sorokin/Library/Caches/com.apple.AppleMediaServices/Storage  # 53KB
+/Users/vladislav.sorokin/Library/Caches/com.apple.AppleMediaServices/DynamicUI  # 0B
+/Users/vladislav.sorokin/Library/Caches/com.apple.AppleMediaServices/Engagement  # 0B
+/Users/vladislav.sorokin/Library/Caches/com.apple.parsecd/Cohorts  # 82KB
+
+=== Browsers ===
+/Users/vladislav.sorokin/Library/Caches/BraveSoftware/Brave-Browser/Default  # 438.5MB
+/Users/vladislav.sorokin/Library/Application Support/BraveSoftware/Brave-Browser/Default/Service Worker/CacheStorage/f278ba7242a4b0474c6478429cbbac36bd73e18d/fec845d5-c19c-409d-ac50-1b13607c8318  # 2.5MB
+/Users/vladislav.sorokin/Library/Application Support/BraveSoftware/Brave-Browser/Default/Service Worker/CacheStorage/f278ba7242a4b0474c6478429cbbac36bd73e18d/4010a4f7-4f8b-4810-b7fd-f1dd8e5d0230  # 2.5MB
+/Users/vladislav.sorokin/Library/Application Support/BraveSoftware/Brave-Browser/Default/Service Worker/CacheStorage/379f1cbab5b08b6fc9e08681e42d8be311441c88/ac0927c0-b3ec-4d7f-b2cf-fdf6b21bb198  # 8KB
+/Users/vladislav.sorokin/Library/Application Support/BraveSoftware/Brave-Browser/Default/Service Worker/CacheStorage/379f1cbab5b08b6fc9e08681e42d8be311441c88/a02802ab-f843-4c0c-b09f-81d9b0a1a052  # 18.5MB
+/Users/vladislav.sorokin/Library/Application Support/BraveSoftware/Brave-Browser/Default/Service Worker/CacheStorage/379f1cbab5b08b6fc9e08681e42d8be311441c88/876b95b4-3a59-41ed-985b-9b92cb798081  # 532KB
+/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/154.0.8037.97  # 747.1MB
+
+=== Developer tools ===
+/Users/vladislav.sorokin/.npm/_cacache/tmp  # 0B
+/Users/vladislav.sorokin/.npm/_cacache/index-v5  # 659KB
+/Users/vladislav.sorokin/.npm/_cacache/content-v2  # 8.7MB
+/Users/vladislav.sorokin/.npm/_npx/705d23756ff7dacc  # 8.7MB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T18_49_45_327Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T18_49_55_007Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T18_55_45_857Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T18_55_54_059Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T18_56_02_863Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T18_59_45_065Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T18_59_53_189Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T19_05_46_062Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T19_06_16_303Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T19_17_09_905Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T19_17_29_274Z-debug-0.log  # 2KB
+/Users/vladislav.sorokin/.npm/_logs/2026-10-06T19_19_04_227Z-debug-0.log  # 1KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/src/__pycache__  # 45KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/src/elastic_index_updater/data_classes/__pycache__  # 4KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/src/elastic_index_updater/infra/__pycache__  # 147KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/src/elastic_index_updater/infra/__tests__/__pycache__  # 143KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/src/search/__pycache__  # 45KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/src/search/__tests__/__pycache__  # 12KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/src/search/tools/__pycache__  # 20KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/src/search/tools/__tests__/__pycache__  # 45KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/src/tests/__pycache__  # 4KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/tests/__pycache__  # 389KB
+/Users/vladislav.sorokin/diftech/rag-search-service-CHAT-2886/tests/manual/__pycache__  # 16KB
+/Users/vladislav.sorokin/Documents/Codex/2026-09-21/let/work/llm-experiments-chat2601-dataset/notebooks/CHAT-2601/__pycache__  # 438KB
+/Users/vladislav.sorokin/Documents/Codex/2026-09-21/let/work/llm-experiments-chat2601-dataset/src/__pycache__  # 16KB
+/Users/vladislav.sorokin/Documents/Codex/2026-09-21/let/work/llm-experiments-chat2601-dataset/src/pipeline_repro/__pycache__  # 152KB
+/Users/vladislav.sorokin/Documents/Codex/2026-09-21/let/work/llm-experiments-chat2601-dataset/src/pipeline_repro/dataclasses/__pycache__  # 4KB
+/Users/vladislav.sorokin/Documents/Codex/2026-09-21/let/work/llm-experiments-chat2601-dataset/src/tools/__pycache__  # 70KB
+/Users/vladislav.sorokin/Library/Application Support/Code/Cache/Cache_Data  # 90KB
+/Users/vladislav.sorokin/Library/Application Support/Code/CachedData/07f806f999227108933c2e30515b26eecc1fda74  # 434KB
+
+=== Apps & utilities ===
+/Users/vladislav.sorokin/Library/Application Support/discord/Cache/Cache_Data  # 406KB
+/Users/vladislav.sorokin/Library/Application Support/Slack/Cache/Cache_Data  # 39.0MB
+
+=== Application Support ===
+/Users/vladislav.sorokin/Library/Application Support/Granola/Cache/Cache_Data  # 12KB
+/Users/vladislav.sorokin/Library/Application Support/Notion Calendar/Cache/Cache_Data  # 11.7MB
+
+# ============================================
+# Summary
+# ============================================
+# Potential cleanup: 2.70GB
+# Items: 66
+# Categories: 6

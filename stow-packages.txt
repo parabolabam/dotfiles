@@ -38,3 +38,8 @@ herdr
 herd
 grpcurl
 codex
+llama.cpp
+docker
+mole
+youtube-dl
+youtube-downloader

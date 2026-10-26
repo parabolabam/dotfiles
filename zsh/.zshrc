@@ -355,3 +355,6 @@ export PATH="$HOME/.local/bin:$PATH"
 # Added by Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 command -v tv >/dev/null 2>&1 && eval "$(tv init zsh)"
+
+# Mole shell completion
+if output="$(mole completion zsh 2>/dev/null)"; then eval "$output"; fi

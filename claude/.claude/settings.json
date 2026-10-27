@@ -86,7 +86,8 @@
     "ponytail@ponytail": true,
     "pyright-lsp@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "savvy-progress@claude-kit": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
@@ -117,6 +118,12 @@
       "source": {
         "source": "github",
         "repo": "vladikk/modularity"
+      }
+    },
+    "claude-kit": {
+      "source": {
+        "source": "github",
+        "repo": "johnnyvizz/claude-kit"
       }
     }
   },

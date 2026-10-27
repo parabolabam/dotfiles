@@ -97,10 +97,6 @@
       }
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "$HOME/.claude/statusline-command.sh"
-  },
   "enabledPlugins": {
     "andrej-karpathy-skills@karpathy-skills": true,
     "frontend-design@claude-plugins-official": true,
@@ -212,5 +208,11 @@
   "verbose": false,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bunx -y ccstatusline@latest",
+    "padding": 0,
+    "refreshInterval": 10
+  }
 }

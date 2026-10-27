@@ -6,12 +6,7 @@ input=$(cat)
 # Extract values from JSON
 model_name=$(echo "$input" | jq -r '.model.display_name // "Claude"')
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd')
-remaining=$(echo "$input" | jq -r '.context_window.remaining_percentage // empty')
 model_id=$(echo "$input" | jq -r '.model.id // ""')
-input_tokens=$(echo "$input" | jq -r '.context_window.current_usage.input_tokens // 0')
-cache_read_tokens=$(echo "$input" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0')
-total_tokens=$(( input_tokens + cache_read_tokens ))
-token_k=$(( total_tokens / 1000 ))
 
 # Shorten cwd: show last 2 path components
 dir_name=$(echo "$cwd" | sed "s|$HOME|~|" | awk -F/ '{if(NF>3) printf "…/%s/%s",$(NF-1),$NF; else print}')
@@ -50,7 +45,6 @@ rgb_green="166;227;161"     # #a6e3a1
 rgb_yellow="249;226;175"    # #f9e2af
 rgb_red="243;139;168"       # #f38ba8
 rgb_lavender="180;190;254"  # #b4befe
-rgb_peach="250;179;135"     # #fab387
 rgb_blue="137;180;250"      # #89b4fa
 rgb_crust="17;17;27"        # #11111b
 
@@ -59,7 +53,6 @@ round_l=$'\xee\x82\xb6'     # U+E0B6 - left semicircle (opens segment)
 round_r=$'\xee\x82\xb4'     # U+E0B4 - right semicircle (closes segment)
 
 # Nerd font icons (UTF-8 encoded)
-icon_gauge=$'\xef\x83\xa4'   # U+F0E4 - tachometer (context)
 icon_chip=$'\xef\x8b\x9b'    # U+F2DB - microchip (model)
 icon_effort=$'\xef\x83\xa3'   # U+F0E3 - balance scale (effort)
 icon_folder=$'\xef\x81\xbc'  # U+F07C - folder open (cwd)
@@ -93,21 +86,8 @@ render_line() {
   printf "\033[0m\033[38;2;%sm%s\033[0m" "$prev_bg" "$round_r"
 }
 
-# === LINE 1: context, model, thinking — vivid bg, dark text ===
+# === LINE 1: model, thinking — vivid bg, dark text ===
 line1=()
-
-# Context remaining — vivid colored bg
-if [ -n "$remaining" ]; then
-  remaining_int=${remaining%.*}
-  if [ "$remaining_int" -gt 20 ] 2>/dev/null; then
-    ctx_bg="$rgb_green"
-  elif [ "$remaining_int" -gt 10 ] 2>/dev/null; then
-    ctx_bg="$rgb_yellow"
-  else
-    ctx_bg="$rgb_red"
-  fi
-  line1+=("${ctx_bg}|${rgb_crust}| ${icon_gauge} ${remaining}% ctx ")
-fi
 
 # Model — teal bg
 line1+=("${rgb_teal}|${rgb_crust}| ${icon_chip} ${model_name} ")
@@ -138,15 +118,5 @@ if [ -n "$branch" ]; then
 else
   line2+=("${rgb_mauve}|${rgb_crust}| ${icon_branch} ")
 fi
-
-# Token usage — always visible, color escalates near 350k
-if [ "$token_k" -ge 330 ] 2>/dev/null; then
-  tok_bg="$rgb_red"; tok_icon="🔥"
-elif [ "$token_k" -ge 300 ] 2>/dev/null; then
-  tok_bg="$rgb_peach"; tok_icon="⚡"
-else
-  tok_bg="$rgb_lavender"; tok_icon="💬"
-fi
-line2+=("${tok_bg}|${rgb_crust}| ${tok_icon} ${token_k}k ")
 
 render_line "${line2[@]}"

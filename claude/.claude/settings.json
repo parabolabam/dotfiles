@@ -116,7 +116,12 @@
     "filetree@claude-code-filetree": true,
     "cache-tax@claude-code-mods": true,
     "savvy-progress@claude-kit": true,
-    "savvy-flow@claude-kit": true
+    "savvy-flow@claude-kit": true,
+    "redgreen@hellosverre-mods": true,
+    "smart-compact@hellosverre-mods": true,
+    "mod-store@hellosverre-mods": true,
+    "image-peek@claude-code-mods": true,
+    "mod-builder@claude-code-mods": true
   },
   "extraKnownMarketplaces": {
     "karpathy-skills": {
@@ -147,6 +152,24 @@
       "source": {
         "source": "github",
         "repo": "johnnyvizz/claude-kit"
+      }
+    },
+    "hellosverre-mods": {
+      "source": {
+        "source": "github",
+        "repo": "hellosverre/claude-skins"
+      }
+    },
+    "claude-code-mods": {
+      "source": {
+        "source": "github",
+        "repo": "karanb192/claude-code-mods"
+      }
+    },
+    "claude-code-filetree": {
+      "source": {
+        "source": "github",
+        "repo": "data-goblin/claude-code-filetree"
       }
     }
   },

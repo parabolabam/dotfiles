@@ -26,10 +26,12 @@
       "Bash(cat:*)",
       "Bash(wc:*)",
       "Bash(ls:*)",
-      "mcp__gitlab__get_file_contents"
+      "mcp__gitlab__get_file_contents",
+      "Bash('/Users/vladislav.sorokin/.nvm/versions/node/v24.14.0/lib/node_modules/@llmtrim/cli/node_modules/@llmtrim/darwin-arm64/bin/llmtrim' window-sub slash *)"
     ],
     "defaultMode": "plan"
   },
+  "model": "opus[1m]",
   "hooks": {
     "PreCompact": [
       {
@@ -54,7 +56,16 @@
     ],
     "SessionStart": [
       {
-        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/Users/vladislav.sorokin/.nvm/versions/node/v24.14.0/lib/node_modules/@llmtrim/cli/node_modules/@llmtrim/darwin-arm64/bin/llmtrim' window-sub hook-start # llmtrim-owned-window-sub-hook",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
         "hooks": [
           {
             "type": "command",
@@ -73,6 +84,17 @@
           }
         ]
       }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/Users/vladislav.sorokin/.nvm/versions/node/v24.14.0/lib/node_modules/@llmtrim/cli/node_modules/@llmtrim/darwin-arm64/bin/llmtrim' window-sub hook-end # llmtrim-owned-window-sub-hook",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -87,21 +109,16 @@
     "pyright-lsp@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
-    "savvy-progress@claude-kit": true
+    "notion@claude-plugins-official": true,
+    "gepa-optimize-anything@gepa": true,
+    "cc-plugin-you-should-know@builtin": true,
+    "skins@hellosverre-mods": true,
+    "filetree@claude-code-filetree": true,
+    "cache-tax@claude-code-mods": true,
+    "savvy-progress@claude-kit": true,
+    "savvy-flow@claude-kit": true
   },
   "extraKnownMarketplaces": {
-    "anthropic-agent-skills": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/skills"
-      }
-    },
-    "fullstack-dev-skills": {
-      "source": {
-        "source": "github",
-        "repo": "jeffallan/claude-skills"
-      }
-    },
     "karpathy-skills": {
       "source": {
         "source": "github",
@@ -120,6 +137,12 @@
         "repo": "vladikk/modularity"
       }
     },
+    "gepa": {
+      "source": {
+        "source": "github",
+        "repo": "gepa-ai/gepa"
+      }
+    },
     "claude-kit": {
       "source": {
         "source": "github",
@@ -129,13 +152,42 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
+  "autoCompactWindow": 400000,
+  "advisorModel": "fable",
+  "pluginConfigs": {
+    "filetree@claude-code-filetree": {
+      "options": {
+        "activity": "writes",
+        "glyphs": "nerd",
+        "follow": "on",
+        "start": "on",
+        "column": "date",
+        "hints": "on",
+        "spacing": "on",
+        "shortcuts": "auto",
+        "open": "editor",
+        "binaries": "Open with",
+        "diff": "lazygit -f",
+        "target": "pane right",
+        "split": "bottom",
+        "treemap": "off"
+      }
+    }
+  },
+  "autoUpdatesChannel": "latest",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
+  "verbose": false,
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }

@@ -135,6 +135,7 @@ alias v="nvim"
 alias vim="nvim"
 alias cat="bat"
 alias lzd="lazydocker"
+[[ -f ~/.claude/settings.private.json ]] && alias claude='claude --settings ~/.claude/settings.private.json'
 alias lzg="lazygit"
 alias tvi="tv"
 

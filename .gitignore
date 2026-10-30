@@ -44,6 +44,7 @@ claude/.claude/hooks/.rtk-hook.sha256
 
 # Claude Code (sensitive/machine-specific)
 claude/.claude/settings.local.json
+claude/.claude/settings.private.json
 claude/.claude/history.jsonl
 claude/.claude/stats-cache.json
 claude/.claude/file-history/
@@ -68,3 +69,9 @@ lazyagent/.config/lazyagent/config.json
 opencode/.config/opencode/herdr-tui-session.js
 opencode/.config/opencode/plugins/herdr-agent-state.js
 opencode/.config/opencode/tui.jsonc
+
+# Employer-specific / machine-local configs (kept untracked)
+# claude/.claude/settings.private.json: autoMode config, loaded via `claude --settings`
+gemini/.gemini/settings.json
+mole/.config/mole/clean-list.txt
+mole/.config/mole/purge_paths

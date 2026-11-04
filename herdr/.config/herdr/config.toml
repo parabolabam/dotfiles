@@ -25,12 +25,91 @@ prefix = "ctrl+s"
 #   prefix+shift+r  reload config                  (was bind r)
 #   prefix+?        help
 
+# Outer terminal is Ghostty without option-as-alt, so alt+ chords never reach
+# herdr — everything below is prefix-based.
+last_pane = "prefix+semicolon"        # tmux default last-pane
+copy_mode = "prefix+["                # tmux copy-mode
+previous_workspace = "prefix+comma"
+next_workspace = "prefix+period"
+next_agent = "prefix+a"               # walk the agent attention queue
+previous_agent = "prefix+shift+a"
+swap_pane_left = "prefix+shift+h"
+swap_pane_down = "prefix+shift+j"
+swap_pane_up = "prefix+shift+k"
+swap_pane_right = "prefix+shift+l"
+clear_pane = "prefix+ctrl+l"
+
+# Popups are session-modal and close when the command exits.
+[[keys.command]]
+key = "prefix+ctrl+g"
+type = "popup"
+command = "lazygit"
+width = "90%"
+height = "90%"
+
+[[keys.command]]
+key = "prefix+ctrl+y"
+type = "popup"
+command = "yazi"
+width = "90%"
+height = "90%"
+
+[[keys.command]]
+key = "prefix+ctrl+t"
+type = "popup"
+command = "btop"
+width = "90%"
+height = "90%"
+
+[[keys.command]]
+key = "prefix+ctrl+d"
+type = "popup"
+command = "lazydocker"
+width = "90%"
+height = "90%"
+
+[[keys.command]]
+key = "prefix+ctrl+k"
+type = "popup"
+command = "k9s"
+width = "90%"
+height = "90%"
+
+[[keys.command]]
+key = "prefix+ctrl+p"
+type = "popup"
+command = "zsh"             # scratch shell
+width = "90%"
+height = "90%"
+
+# Dendy-style "select agent" screen: 8-bit card per agent, Enter jumps to it.
+[[keys.command]]
+key = "prefix+ctrl+a"
+type = "popup"
+command = "python3 \"$HOME/.config/herdr/agent-select/agent_select.py\""
+width = "90%"
+height = "90%"
+
+# Open the live agent side pane (~36 cols) on the left of the current tab.
+[[keys.command]]
+key = "prefix+shift+b"
+type = "shell"
+command = "sh \"$HOME/.config/herdr/agent-select/side-pane.sh\""
+
 # ============================================================================
 #  Theme
 # ============================================================================
 [theme]
-# Matches the old `@catppuccin_flavor "mocha"`.
+# Kanagawa palette; no automatic light/dark switching.
 name = "kanagawa"
+auto_switch = false
+
+# ============================================================================
+#  Terminal
+# ============================================================================
+[terminal]
+# herdr reads kitty_graphics from [terminal], not [experimental].
+kitty_graphics = true
 
 # ============================================================================
 #  Session persistence (replaces tmux-resurrect)
@@ -41,13 +120,13 @@ name = "kanagawa"
 # [session] resume_agents_on_restore is already true by default, which also
 # resumes Claude/Codex conversations after a restart.
 
-auto_switch = false
 [experimental]
-kitty_graphics = true
 # Also restore pane scrollback across full server restarts. Experimental and
 # off by default upstream; safe to remove if it misbehaves.
 pane_history = true
 
+# Forces the ASCII layout while the prefix is active, so prefix keys work on
+# the Russian layout.
 switch_ascii_input_source_in_prefix = true
 
 # ============================================================================
@@ -56,8 +135,22 @@ switch_ascii_input_source_in_prefix = true
 # Bare keys must stay above the [ui.*] sub-tables below, or TOML assigns them
 # to whichever sub-table precedes them instead of to [ui].
 [ui]
+# prefix+b hides the built-in sidebar completely so the side pane replaces it.
+sidebar_collapsed_mode = "hidden"
 agent_panel_sort = "priority"
 show_agent_labels_on_pane_borders = true
+status_indicators = "symbols"
+pane_gaps = false                # tmux-style shared dividers
+pane_outer_borders = false
+hide_tab_bar_when_single_tab = true
+prompt_new_tab_name = false
+tab_bar_right = [{ type = "zoom" }, { type = "datetime", format = "%a %d %b %H:%M" }]
+window_title = "{workspace} · {tab}"
+
+# Claude Code sets the terminal title to the current task, so show it as a
+# second row.
+[ui.sidebar.agents.rows_by_agent]
+claude = [["state_text", "machine", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
 
 # ============================================================================
 #  Notifications (replaces Claude Code's Stop/Notification hooks)
@@ -69,7 +162,6 @@ show_agent_labels_on_pane_borders = true
 # Note: herdr only notifies for BACKGROUND workspaces — the pane you are
 # looking at stays quiet, which the Stop hook did not respect.
 # [ui.sound] is left at its defaults (enabled, herdr's own audio).
-status_indicators = "symbols"
 [ui.toast]
 # In-app popup only; nothing reaches the macOS Notification Center.
 delivery = "herdr"

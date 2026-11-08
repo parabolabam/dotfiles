@@ -128,6 +128,20 @@ else
 fi
 
 # ============================================================================
+#  Jupyter scratch kernel
+# ============================================================================
+log_header "🐍 Jupyter Scratch Kernel"
+
+JUPYTER_SCRATCH="$HOME/.local/share/jupyter-scratch"
+if ! command -v uv >/dev/null 2>&1; then
+    log_warning "uv not found, skipping Jupyter scratch env"
+else
+    [[ -d "$JUPYTER_SCRATCH" ]] || { log_step "Creating scratch venv..."; uv venv --python 3.12 "$JUPYTER_SCRATCH"; }
+    uv pip install --python "$JUPYTER_SCRATCH/bin/python" ipykernel jupyter_client pandas polars matplotlib anthropic openai python-dotenv
+    log_success "Jupyter scratch env ready"
+fi
+
+# ============================================================================
 #  Create directories
 # ============================================================================
 log_header "📁 Directory Structure"

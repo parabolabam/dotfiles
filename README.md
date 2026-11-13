@@ -289,3 +289,15 @@ Keep out of this repo:
 - `~/.config` is the live target directory after symlinks are applied.
 - The supported path for now is Homebrew + Stow.
 - `dotfiles add ... --brew` only registers the formula; add `--install` if you want it installed immediately.
+
+## Shell startup
+
+The setup and rebuild scripts generate shell initializers after Stow. After manually stowing Zsh or pulling shell-integration changes, generate them once:
+
+```bash
+~/.local/bin/refresh-shell-init
+```
+
+Run it again after upgrading Starship, zoxide, television, or fzf. Starship renders asynchronously so the prompt appears without blocking shell input. Generated initializer files live under `~/.config/zsh/generated/`; they are local machine state, not tracked dotfiles.
+
+Use `./scripts/stow-packages.sh zsh` from the dotfiles directory to apply or refresh the Zsh package symlinks. In Lazygit, `q` keeps its normal quit behavior.

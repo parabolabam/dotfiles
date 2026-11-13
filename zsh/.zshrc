@@ -7,7 +7,7 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-mkdir -p "$ZDOTDIR" "$XDG_CACHE_HOME"
+[[ -d "$ZDOTDIR" && -d "$XDG_CACHE_HOME" ]] || mkdir -p "$ZDOTDIR" "$XDG_CACHE_HOME"
 
 # ============================================================================
 #  fpath hygiene (must run before zinit and compinit)
@@ -25,6 +25,19 @@ for _zfp in /opt/homebrew/share/zsh/functions \
   [[ -d "$_zfp" ]] && fpath+="$_zfp"
 done
 unset _zfp
+
+# Brew and Grok completions must be in fpath before compinit.
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  export HOMEBREW_PREFIX=/opt/homebrew HOMEBREW_CELLAR=/opt/homebrew/Cellar HOMEBREW_REPOSITORY=/opt/homebrew
+  fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+  export FPATH
+  if [[ $PATH != /opt/homebrew/bin:/opt/homebrew/sbin(|:*) ]]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+    [[ -z ${MANPATH-} ]] || { export MANPATH="${MANPATH%"${MANPATH##*[!:]}"}"; export MANPATH=":${MANPATH#"${MANPATH%%[!:]*}"}"; }
+    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+  fi
+fi
+fpath=(~/.grok/completions/zsh $fpath)
 
 # ============================================================================
 #  Zinit Plugin Manager
@@ -81,22 +94,36 @@ bindkey '^[[1;5D' backward-word
 # ============================================================================
 #  Prompt (Starship)
 # ============================================================================
-eval "$(starship init zsh)"
+
+# Generated initializers are local machine state. Bootstrap them explicitly.
+_zsh_init_ready=1
+if [[ ! -r "$ZDOTDIR/async-starship.zsh" ]]; then
+  _zsh_init_ready=0
+  print -u2 'Shell prompt integration is missing. Restow the zsh package.'
+fi
+for _zsh_init in starship.zsh starship-continuation zoxide.zsh fzf.zsh tv.zsh; do
+  if [[ ! -s "$ZDOTDIR/generated/$_zsh_init" ]]; then
+    _zsh_init_ready=0
+    break
+  fi
+done
+unset _zsh_init
+if (( ! _zsh_init_ready )); then
+  print -u2 'Shell initializers are missing. Run: ~/.local/bin/refresh-shell-init'
+  PROMPT='%~ %# '
+fi
+
+if (( _zsh_init_ready )); then
+  source "$ZDOTDIR/generated/starship.zsh"
+  source "$ZDOTDIR/async-starship.zsh"
+fi
 
 # ============================================================================
 #  Tools
 # ============================================================================
 
-# Homebrew
-[[ -f /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
-
 # Zoxide
-eval "$(zoxide init zsh)"
-
-# Television
-if command -v tv >/dev/null 2>&1; then
-  eval "$(tv init zsh)"
-fi
+(( _zsh_init_ready )) && source "$ZDOTDIR/generated/zoxide.zsh"
 
 # FZF
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
@@ -105,7 +132,13 @@ export FZF_CTRL_R_OPTS="
   --bind 'ctrl-/:toggle-preview'
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --header 'CTRL-Y to copy'"
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+# Match ~/.fzf.zsh without spawning fzf at every startup.
+[[ ":$PATH:" == *:/opt/homebrew/opt/fzf/bin:* ]] || PATH="${PATH:+${PATH}:}/opt/homebrew/opt/fzf/bin"
+(( _zsh_init_ready )) && source "$ZDOTDIR/generated/fzf.zsh"
+
+# Load Television after fzf: its Ctrl-R and Ctrl-T bindings take precedence.
+(( _zsh_init_ready )) && source "$ZDOTDIR/generated/tv.zsh"
+unset _zsh_init_ready
 
 # ============================================================================
 #  Lazy-loaded Tools
@@ -355,13 +388,5 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Added by Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
-command -v tv >/dev/null 2>&1 && eval "$(tv init zsh)"
-
-# Mole shell completion
-if output="$(mole completion zsh 2>/dev/null)"; then eval "$output"; fi
-
-# >>> grok installer >>>
+# Mole completion is supplied by Homebrew's site-functions directory.
 export PATH="$HOME/.grok/bin:$PATH"
-fpath=(~/.grok/completions/zsh $fpath)
-autoload -Uz compinit && compinit -C
-# <<< grok installer <<<

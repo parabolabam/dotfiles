@@ -174,6 +174,9 @@ if [[ -x "$DOTFILES_DIR/scripts/stow-packages.sh" ]]; then
     log_step "Applying packages from stow-packages.txt..."
     "$DOTFILES_DIR/scripts/stow-packages.sh" --target "$HOME"
     log_success "Dotfiles stowed"
+    log_step "Generating shell initializers..."
+    "$DOTFILES_DIR/zsh/.local/bin/refresh-shell-init"
+    log_success "Shell initializers ready"
 else
     log_error "scripts/stow-packages.sh is missing or not executable"
     exit 1

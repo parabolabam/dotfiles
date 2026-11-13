@@ -1,0 +1,27 @@
+#!/bin/zsh
+# Run after upgrading starship, zoxide, television, or fzf.
+set -eu
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+generated_dir="$config_dir/generated"
+tmp_dir="$(mktemp -d "${TMPDIR:-/tmp}/zsh-init.XXXXXXXX")"
+trap 'rm -rf -- "$tmp_dir"' EXIT
+
+command starship init zsh > "$tmp_dir/starship-raw"
+# Fail loudly if Starship changes the generated init layout.
+[[ $(command grep -c '^PROMPT2=' "$tmp_dir/starship-raw") == 1 ]] || { print -u2 'Unexpected Starship init; inspect before refreshing.'; exit 1; }
+command sed 's|^PROMPT2=.*|PROMPT2="$(<"$ZDOTDIR/generated/starship-continuation")"|' "$tmp_dir/starship-raw" > "$tmp_dir/starship.zsh"
+command starship prompt --continuation > "$tmp_dir/starship-continuation"
+command zoxide init zsh > "$tmp_dir/zoxide.zsh"
+command tv init zsh > "$tmp_dir/tv.zsh"
+command fzf --zsh > "$tmp_dir/fzf.zsh"
+for init_file in "$tmp_dir"/*.zsh; do
+  [[ -s "$init_file" ]] || { print -u2 "Empty initializer: $init_file"; exit 1; }
+  zsh -n "$init_file"
+done
+[[ -s "$tmp_dir/starship-continuation" ]] || { print -u2 "Empty Starship continuation prompt"; exit 1; }
+mkdir -p "$generated_dir"
+for init_file in "$tmp_dir"/*.zsh "$tmp_dir/starship-continuation"; do
+  cp "$init_file" "$generated_dir/${init_file:t}.new"
+  mv -f "$generated_dir/${init_file:t}.new" "$generated_dir/${init_file:t}"
+done
+print "Refreshed shell initializers in $generated_dir"
